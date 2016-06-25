@@ -1,0 +1,15 @@
+//
+// Created by Anthony REY on 24/05/2016.
+//
+
+#ifndef SFML_TEST_UNKNOWNKEYEXCEPTION_HPP
+#define SFML_TEST_UNKNOWNKEYEXCEPTION_HPP
+
+
+class KeyException {
+
+
+};
+
+
+#endif //SFML_TEST_UNKNOWNKEYEXCEPTION_HPP

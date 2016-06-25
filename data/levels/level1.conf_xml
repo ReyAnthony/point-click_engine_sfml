@@ -1,0 +1,18 @@
+<include>sprites</include>
+<include>sprites</include>
+
+<level name="providen_level_1_name">
+    <background> providen_background_level_1 </background>
+    <object name="un personnage" sprite="perso_spr" pos_x="10" pos_y="12">
+        <see>
+            <say> #--what-does-he-say </say>
+        </see>
+    </object>
+
+    <object name="un personnage" sprite="perso_spr" pos_x="10" pos_y="12">
+        <see>
+            <say> #--what-does-he-say </say>
+        </see>
+    </object>
+
+</level>

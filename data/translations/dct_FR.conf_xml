@@ -1,0 +1,5 @@
+<dict>
+    <key name="level_1_name"> Le niveau 1 </key>
+    <key name="action_see"> Regarder </key>
+    <key name="cant_look"> Je ne peux pas regarder ça ! </key>
+</dict>

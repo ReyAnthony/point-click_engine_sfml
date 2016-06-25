@@ -1,0 +1,18 @@
+[config]
+default-conf-type = conf_xml
+game-name = game_name
+
+[paths]
+translations-dir = ./data/translations
+levels-dir = ./data/levels
+actions-dir = ./data/actions
+
+[translations]
+default-lang = FR
+translation-escape-char = #--
+default-dct-file-name = dct_
+
+[levels]
+starting-level = level1
+
+

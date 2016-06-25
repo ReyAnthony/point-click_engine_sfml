@@ -1,0 +1,4 @@
+<action internal-name="see" name="#--action_see" default-say="#--cant_look"/>
+<action internal-name="get" name="#--action-get" default-say="#--cant_get">
+    <put-in-inventory/>
+</action>
