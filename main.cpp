@@ -5,7 +5,6 @@
 #include "exceptions/NoSuchConfType.hpp"
 #include "levels/LevelLoader.hpp"
 
-#include <SFML/Graphics.hpp>
 #include <stack>
 
 namespace PCGE
@@ -23,6 +22,7 @@ namespace PCGE
         ~App()
         {
             delete window;
+            delete trad;
         }
 
         void start()
@@ -35,12 +35,14 @@ namespace PCGE
                 //should make a generator ?
                 if (map[conf.DEFAULT_CONF_TYPE] == "conf_xml")
                     trad = new XMLTranslationReader(conf.getDefaultTranslationFile());
+                //else if(map[conf.DEFAULT_CONF_TYPE] == "conf_json")
+                //    trad = new JSONTranslationReader(conf.getDefaultTranslationFile());
                 else
                     throw new NoSuchConfType();
 
                 auto starting_level = conf.getStartingLevel();
                 LevelLoader level_loader(*trad, conf);
-                auto generated_scene = level_loader.generateDataFromLevelFile(starting_level);
+                this->current_scene = level_loader.generateDataFromLevelFile(starting_level);
 
                 running = true;
                 run();
@@ -68,7 +70,7 @@ namespace PCGE
 
         void initRenderer()
         {
-            window = new sf::RenderWindow(sf::VideoMode(800, 600), app_title);
+            window = new sf::RenderWindow(sf::VideoMode(1280, 720), conf.getAppName());
         }
 
         void gameLoop()
@@ -79,6 +81,7 @@ namespace PCGE
 
                 while (window->pollEvent(event))
                 {
+
                     if (event.type == sf::Event::Closed)
                     {
                         window->close();
@@ -87,6 +90,7 @@ namespace PCGE
                 }
 
                 window->clear();
+                window->draw(current_scene);
                 window->display();
             }
         }
@@ -96,11 +100,10 @@ namespace PCGE
             //utilisé pour des clean qui ne touchent pas la mémoire ?
         }
 
-        Scene* current_scene;
+        Scene current_scene;
         bool running = false;
 
         sf::RenderWindow* window;
-        std::string app_title;
 
         TxtConfReader conf;
         TranslationReader *trad;

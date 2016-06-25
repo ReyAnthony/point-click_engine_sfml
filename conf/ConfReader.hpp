@@ -15,7 +15,6 @@
 #include <algorithm>
 #include "../exceptions/KeyException.hpp"
 
-
 namespace pt = boost::property_tree;
 
 class TxtConfReader {
@@ -69,6 +68,11 @@ public:
         path.erase(remove_if(path.begin(),path.end(),isspace),path.end());
 
         return path;
+    }
+
+    std::string getAppName()
+    {
+        return config_values[GAME_NAME];
     }
 
     ~TxtConfReader(){
