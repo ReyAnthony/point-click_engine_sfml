@@ -18,12 +18,19 @@ public:
 
     Scene(const Scene& ref)
     {
-        std::cout << "cpy ctr" << std::endl;
+        background = ref.background;
+
+        objects = ref.objects;
+        level_name = ref.level_name;
+    }
+
+    Scene& operator=(const Scene& ref){
 
         background = ref.background;
 
         objects = ref.objects;
         level_name = ref.level_name;
+        return *this;
     }
 
     ~Scene()
@@ -54,8 +61,9 @@ public:
         }
     }
 
-protected:
-    void draw (sf::RenderTarget& target, sf::RenderStates) const override {
+private:
+
+    virtual void draw (sf::RenderTarget& target, sf::RenderStates) const override {
 
         target.draw(background);
 
@@ -64,8 +72,6 @@ protected:
         }
     }
 
-
-private:
     std::string level_name;
     std::vector<Object> objects;
     Object background;

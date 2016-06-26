@@ -13,7 +13,7 @@
 #include <array>
 #include <map>
 #include <algorithm>
-#include "../exceptions/KeyException.hpp"
+#include "../exceptions/Exception.hpp"
 
 namespace pt = boost::property_tree;
 
@@ -35,7 +35,7 @@ public:
             }
         }
         catch( boost::exception & e ){
-            throw KeyException();
+            throw Exception("No such key in " + CONFIG_FILE);
         }
     }
 
@@ -60,6 +60,13 @@ public:
         auto default_conf_type = config_values[DEFAULT_CONF_TYPE];
 
         return translation_dir +"/"+ default_level_filename + "." + default_conf_type;
+    }
+
+    std::string getDefaultFont() {
+        auto fonts_dir = config_values[FONTS_DIR];
+        auto default_font = config_values[DEFAULT_FONT];
+
+        return fonts_dir + "/" + default_font;
     }
 
     std::string addPathAndTypeToInclude(std::string name){
@@ -88,6 +95,7 @@ public:
     const std::string TRANSLATION_DIR = "paths.translations-dir";
     const std::string LEVELS_DIR = "paths.levels-dir";
     const std::string ACTIONS_DIR = "paths.actions-dir";
+    const std::string FONTS_DIR = "paths.fonts-dir";
 
     //CONFIG section
     const std::string DEFAULT_CONF_TYPE = "config.default-conf-type";
@@ -97,13 +105,18 @@ public:
     const std::string STARTING_LEVEL= "levels.starting-level";
 
 
+    //FONTS section
+    const std::string DEFAULT_FONT ="fonts.default-font";
+
+
 private:
 
     const std::string CONFIG_FILE = "./data/config/default.conf_txt";
-    static const int key_count = 9;
+    static const int key_count = 11;
     std::array<std::string, key_count> keys = {ESCAPE_CHAR, DEFAULT_DCT, DEFAULT_LANG,
                                                 TRANSLATION_DIR, LEVELS_DIR, ACTIONS_DIR,
-                                                DEFAULT_CONF_TYPE, GAME_NAME, STARTING_LEVEL};
+                                                DEFAULT_CONF_TYPE, GAME_NAME, STARTING_LEVEL,
+                                               DEFAULT_FONT, FONTS_DIR};
 
     std::map<std::string, std::string> config_values;
 };

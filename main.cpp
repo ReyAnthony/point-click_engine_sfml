@@ -2,8 +2,8 @@
 #include "translations/XMLTranslationReader.hpp"
 #include "game/Scene.hpp"
 #include "conf/ConfReader.hpp"
-#include "exceptions/NoSuchConfType.hpp"
 #include "levels/LevelLoader.hpp"
+#include "exceptions/ExceptionScene.hpp"
 
 #include <stack>
 
@@ -23,6 +23,7 @@ namespace PCGE
         {
             delete window;
             delete trad;
+            delete current_scene;
         }
 
         void start()
@@ -38,24 +39,30 @@ namespace PCGE
                 //else if(map[conf.DEFAULT_CONF_TYPE] == "conf_json")
                 //    trad = new JSONTranslationReader(conf.getDefaultTranslationFile());
                 else
-                    throw new NoSuchConfType();
+                    throw new Exception("No such configuration type "+ map[conf.DEFAULT_CONF_TYPE]);
 
                 auto starting_level = conf.getStartingLevel();
                 LevelLoader level_loader(*trad, conf);
                 this->current_scene = level_loader.generateDataFromLevelFile(starting_level);
 
+
+            }
+            catch(Exception &e )
+            {
+                ExceptionScene* ex = new ExceptionScene(conf.getDefaultFont(), e);
+                this->current_scene = ex;
+            }
+
+            try {
                 running = true;
                 run();
             }
-            catch(KeyException &e )
-            {
-                std::cout << "Key exception" << std::endl;
-            }
-            catch(NoSuchConfType &e)
-            {
-                std::cout << "No such conf Type" << std::endl;
-                //apeller une fonction qui affiche le message d'erreur
-                //puis clean lorsqu'on appuie une touche
+            catch(Exception &e){
+
+                delete current_scene;
+                ExceptionScene* ex = new ExceptionScene(conf.getDefaultFont(), e);
+                this->current_scene = ex;
+
             }
         }
 
@@ -92,9 +99,9 @@ namespace PCGE
                     }
                 }
 
-                window->clear();
-                current_scene.update(time_for_frame);
-                window->draw(current_scene);
+                window->clear(sf::Color::Black);
+                current_scene->update(time_for_frame);
+                window->draw(*current_scene);
                 window->display();
             }
         }
@@ -104,14 +111,14 @@ namespace PCGE
             //utilisé pour des clean qui ne touchent pas la mémoire ?
         }
 
-        Scene current_scene;
+        Scene* current_scene;
         bool running = false;
 
         sf::RenderWindow* window;
         sf::Clock clock;
 
         TxtConfReader conf;
-        TranslationReader *trad;
+        TranslationReader* trad;
     };
 }
 

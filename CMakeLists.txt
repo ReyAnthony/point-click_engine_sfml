@@ -3,7 +3,7 @@ project(sfml_test)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -F /Library/Frameworks -framework sfml-window -framework sfml-graphics -framework sfml-system ")
 
-set(SOURCE_FILES main.cpp exceptions/KeyException.cpp exceptions/KeyException.hpp translations/TranslationReader.cpp translations/TranslationReader.hpp translations/XMLTranslationReader.cpp translations/XMLTranslationReader.hpp game/Scene.cpp game/Scene.hpp game/SharedDataPool.cpp game/SharedDataPool.hpp conf/ConfReader.cpp conf/ConfReader.hpp conf/ConfReader.cpp conf/ConfReader.hpp exceptions/NoSuchConfType.cpp exceptions/NoSuchConfType.hpp levels/LevelLoader.cpp levels/LevelLoader.hpp game/Object.cpp game/Object.hpp)
+set(SOURCE_FILES main.cpp exceptions/Exception.cpp exceptions/Exception.hpp translations/TranslationReader.cpp translations/TranslationReader.hpp translations/XMLTranslationReader.cpp translations/XMLTranslationReader.hpp game/Scene.cpp game/Scene.hpp game/SharedDataPool.cpp game/SharedDataPool.hpp conf/ConfReader.cpp conf/ConfReader.hpp conf/ConfReader.cpp conf/ConfReader.hpp levels/LevelLoader.cpp levels/LevelLoader.hpp game/Object.cpp game/Object.hpp exceptions/ExceptionScene.cpp exceptions/ExceptionScene.hpp)
 
 add_executable(sfml_test ${SOURCE_FILES})
 

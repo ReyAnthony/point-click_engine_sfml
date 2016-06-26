@@ -2,4 +2,5 @@
     <key name="level_1_name"> The first level </key>
     <key name="action_see"> Look at </key>
     <key name="cant_look"> I can't look at this !</key>
+    <key name="suspended_pirate"> The suspended pirate</key>
 </dict>

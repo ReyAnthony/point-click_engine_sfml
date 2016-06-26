@@ -9,10 +9,10 @@
       <sourceFolder url="file://$MODULE_DIR$/translations/XMLTranslationReader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/translations/TranslationReader.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/translations/XMLTranslationReader.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/exceptions/NoSuchConfType.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/exceptions/KeyException.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/exceptions/NoSuchConfType.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/exceptions/KeyException.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exceptions/Exception.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exceptions/ExceptionScene.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exceptions/Exception.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exceptions/ExceptionScene.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/SharedDataPool.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Scene.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Object.cpp" isTestSource="false" />

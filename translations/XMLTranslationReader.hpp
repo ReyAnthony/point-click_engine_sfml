@@ -11,7 +11,7 @@
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 #include "TranslationReader.hpp"
-#include "../exceptions/KeyException.hpp"
+#include "../exceptions/Exception.hpp"
 
 namespace pt = boost::property_tree;
 

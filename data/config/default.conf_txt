@@ -6,13 +6,18 @@ game-name = Ceci n'est pas une pipe
 translations-dir = ./data/translations
 levels-dir = ./data/levels
 actions-dir = ./data/actions
+fonts-dir = ./data/fonts/
 
 [translations]
-default-lang = FR
+default-lang = EN
 translation-escape-char = #--
 default-dct-file-name = dct_
 
 [levels]
 starting-level = level1
+
+[fonts]
+default-font = GlacialIndifference-Regular.otf
+
 
 

@@ -30,7 +30,7 @@ public:
             : translation_reader(translation_reader), configuration_reader(configuration_reader){
     }
 
-    Scene generateDataFromLevelFile(std::string levelFile){
+    Scene* generateDataFromLevelFile(std::string levelFile){
 
         pt::ptree tree;
         pt::read_xml(levelFile, tree);
@@ -53,12 +53,12 @@ public:
 
 private:
 
-    Scene generateScene(pt::ptree& tree, std::list<std::string> include_files){
+    Scene* generateScene(pt::ptree& tree, std::list<std::string> include_files){
 
         providen_values = generateIncludeData(include_files);
 
-        Scene scene;
-        walk(tree, "level", scene);
+        Scene* scene = new Scene();
+        walk(tree, "level", *scene);
         return scene;
     }
 

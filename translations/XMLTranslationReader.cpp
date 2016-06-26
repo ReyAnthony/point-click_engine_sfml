@@ -29,5 +29,5 @@ std::string XMLTranslationReader::getTranslationFromKey(std::string key) {
                     }
                 }
 
-    throw KeyException();
+    throw Exception("No Such key : " + key + " in " + filename);
 }

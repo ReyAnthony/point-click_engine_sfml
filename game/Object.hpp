@@ -108,14 +108,12 @@ public:
         }
     }
 
-protected:
+private:
+
     virtual void draw (sf::RenderTarget& target, sf::RenderStates) const override {
 
         target.draw(sprite);
     }
-
-
-private:
 
     void initTextureAndSprite(std::string texture_file){
 
