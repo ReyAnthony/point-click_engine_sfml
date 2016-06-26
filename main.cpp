@@ -75,8 +75,11 @@ namespace PCGE
 
         void gameLoop()
         {
+            clock.restart();
+
             while(running) {
 
+                sf::Time time_for_frame = clock.restart();
                 sf::Event event;
 
                 while (window->pollEvent(event))
@@ -90,6 +93,7 @@ namespace PCGE
                 }
 
                 window->clear();
+                current_scene.update(time_for_frame);
                 window->draw(current_scene);
                 window->display();
             }
@@ -104,6 +108,7 @@ namespace PCGE
         bool running = false;
 
         sf::RenderWindow* window;
+        sf::Clock clock;
 
         TxtConfReader conf;
         TranslationReader *trad;

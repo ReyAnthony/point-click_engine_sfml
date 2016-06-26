@@ -1,0 +1,4 @@
+<provide name="providen_level_1_name"> #--level_1_name </provide>
+<provide name="providen_background_level">  ./data/sprites/LV1_back.png </provide>
+<provide name="providen_sprite_player"> ./data/sprites/pirate0.png </provide>
+<provide name="providen_sprite_pirate3"> ./data/sprites/pirate3.png </provide>

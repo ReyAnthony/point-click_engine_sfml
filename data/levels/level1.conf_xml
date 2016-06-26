@@ -1,4 +1,4 @@
-<include>sprites</include>
+<include>sprites_includes</include>
 
 <level name="providen_level_1_name">
     <background> providen_background_level </background>
@@ -8,7 +8,7 @@
         </see>
     </object>
 
-    <object name="un personnage" sprite="providen_sprite_player" pos_x="700" pos_y="300">
+    <object name="Le pirate suspendu" sprite="providen_sprite_pirate3" pos_x="655" pos_y="110" frames="6" ms="120">
         <see>
             <say> #--what-does-he-say </say>
         </see>

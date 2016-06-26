@@ -1,4 +1,13 @@
-<action internal-name="see" name="#--action_see" default-say="#--cant_look"/>
-<action internal-name="get" name="#--action-get" default-say="#--cant_get">
+<action internal-name="see" ui-name="#--action_see" default-say="#--cant_look"/>
+<action internal-name="talk" ui-name="#--action_talk" default-say="#--cant_talk"/>
+
+<action internal-name="grab" ui-name="#--action_grab" default-say="#--cant_grab">
+    <multipleUses/>
+    <MCQ/>
     <put-in-inventory/>
+</action>
+
+<action internal-use="use" ui-name="#--action_use" default-say="#--cant-use">
+    <with/>
+    <goTo/>
 </action>

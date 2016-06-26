@@ -99,7 +99,7 @@ private:
             auto node_type = v.first;
             if(node_type !=""){
                 if(node_type == "level"){
-                    
+
                     auto level_name = getAttributeAsString("name", v);
                     scene.setName(level_name);
                 }
@@ -115,8 +115,21 @@ private:
                     auto pos_y = getAttribute<int>("pos_y", v);
                     auto pos_x = getAttribute<int>("pos_x", v);
 
-                    Object obj(obj_name, pos_x, pos_y, sprite);
-                    scene.addObject(obj);
+                    try{
+
+                        auto frames = getAttribute<int>("frames", v);
+                        auto ms = getAttribute<int>("ms", v);
+
+                        Object obj(obj_name, pos_x, pos_y, sprite, frames, ms);
+                        scene.addObject(obj);
+
+                    }
+                    catch(boost::exception & e)
+                    {
+                        //if no frames / ms (optional)
+                        Object obj(obj_name, pos_x, pos_y, sprite);
+                        scene.addObject(obj);
+                    }
                 }
             }
 
@@ -166,16 +179,5 @@ private:
 
     std::map<std::string, std::string> providen_values;
 };
-
-
-/*
-std::cout << name << std::endl;
-
-typedef std::map<std::string, std::string>::const_iterator MapIterator;
-for (MapIterator iter = providen_values.begin(); iter != providen_values.end(); iter++)
-{
-   std::cout << "Key: " << iter->first << std::endl << "Values:" << iter->second << std::endl;
-}
-*/
 
 #endif //SFML_TEST_LEVELLOADER_HPP

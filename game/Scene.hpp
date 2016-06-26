@@ -47,6 +47,13 @@ public:
         objects.push_back(object);
     }
 
+    void update(sf::Time& deltaTime){
+
+        for(Object& obj : objects){
+            obj.update(deltaTime);
+        }
+    }
+
 protected:
     void draw (sf::RenderTarget& target, sf::RenderStates) const override {
 
