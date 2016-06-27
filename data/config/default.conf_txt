@@ -1,7 +1,7 @@
 [config]
 default-conf-type = conf_xml
 game-name = ! Monkey Island
-framerate = 30
+framerate = 15
 
 [paths]
 translations-dir = ./data/translations

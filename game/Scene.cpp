@@ -44,6 +44,13 @@ void Scene::addPlayer(Object& player) {
 void Scene::addObject(Object& object) {
 
     objects.push_back(object);
+    std::sort(objects.begin(), objects.end(),
+              [this](Object& a, Object& b) {
+                  auto tested = (a.getPosY() + a.getYLimit());
+                  auto other = (b.getPosY() + b.getYLimit());
+
+                  return tested < other;
+              });
 }
 
 void Scene::update(sf::Time& deltaTime) {
@@ -52,11 +59,9 @@ void Scene::update(sf::Time& deltaTime) {
 
     for(Object& obj : objects){
         obj.update(deltaTime);
-        drawing_list.push_back(&obj);
     }
 
-    drawing_list.push_back(&player);
-
+    /*
     std::sort(drawing_list.begin(), drawing_list.end(),
               [this](Object* a, Object* b) {
 
@@ -66,7 +71,26 @@ void Scene::update(sf::Time& deltaTime) {
                   //if player < other then it is behind it (drawn before)
                   return player < other;
               });
+      */
 
+    //take the list and insert the player where it should be
+
+    int index_insert_player = 0;
+    int current_index = 0;
+
+    for(auto it = objects.begin(); it != objects.end(); ++it, ++current_index)
+    {
+        auto player_pos = (player.getPosY()+ player.getHeight());
+        auto other = (it->getPosY() + it->getYLimit());
+
+        drawing_list.push_back(&(*it));
+        if(player_pos > other){
+            index_insert_player = current_index + 1;
+        }
+    }
+
+    auto iter = drawing_list.begin();
+    drawing_list.insert(iter + index_insert_player, &player);
 }
 
 void Scene::draw(sf::RenderTarget& target, sf::RenderStates) const {

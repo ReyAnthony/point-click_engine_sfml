@@ -6,6 +6,7 @@
 #define SFML_TEST_SCENE_HPP
 
 #include <vector>
+#include <list>
 #include "Object.hpp"
 
 class Scene : public sf::Drawable {

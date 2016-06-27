@@ -23,102 +23,21 @@ class TxtConfReader {
 
 public:
 
-    void loadConfiguration(){
+    void loadConfiguration();
 
-        pt::ptree tree;
-
-        try{
-            pt::ini_parser::read_ini(CONFIG_FILE, tree);
-        }
-        catch(boost::exception &e){
-            throw Exception(boost::diagnostic_information(e));
-        }
-
-        try{
-
-            for(auto key : keys){
-
-                std::string retrieved_key = tree.get<std::string>(key);
-                config_values.insert(std::pair<std::string, std::string>(key, retrieved_key));
-            }
-        }
-        catch(boost::exception & e){
-            throw Exception("No such key in " + CONFIG_FILE);
-        }
-    }
-
-    std::string getDefaultConfType() {
-        return config_values[DEFAULT_CONF_TYPE];
-    }
-
-     std::string getDefaultTranslationFile() {
-
-        auto translation_dir = config_values[TRANSLATION_DIR];
-        auto default_dct_filename = config_values[DEFAULT_DCT];
-        auto default_lang = config_values[DEFAULT_LANG];
-        auto default_conf_type = config_values[DEFAULT_CONF_TYPE];
-
-        return translation_dir + "/" + default_dct_filename+ default_lang + "." + default_conf_type;
-    }
-
-    std::string getStartingLevel() {
-
-        auto translation_dir = config_values[LEVELS_DIR];
-        auto default_level_filename = config_values[STARTING_LEVEL];
-        auto default_conf_type = config_values[DEFAULT_CONF_TYPE];
-
-        return translation_dir +"/"+ default_level_filename + "." + default_conf_type;
-    }
-
-    bool shouldShowFps(){
-
-        return config_values[FPS] == "true";
-    }
-
-    unsigned int getFramerate(){
-        return std::stoul(config_values[FRAME_RATE]);
-    }
-
-    std::string getDefaultFont() {
-        auto fonts_dir = config_values[FONTS_DIR];
-        auto default_font = config_values[DEFAULT_FONT];
-
-        return fonts_dir + "/" + default_font;
-    }
-
-    std::string addPathAndTypeToInclude(std::string name){
-
-        auto path =  config_values[LEVELS_DIR] + "/" + name + "."  + config_values[DEFAULT_CONF_TYPE];
-        path.erase(remove_if(path.begin(),path.end(),isspace),path.end());
-
-        return path;
-    }
-
-    std::string getAppName() {
-
-        return config_values[GAME_NAME];
-    }
-
-    std::string getTranslationEscapeChar(){
-        return config_values[ESCAPE_CHAR];
-    }
-
-    //TODO ça devrait etre dans un fichier de conf XML JSON et lu par le parseur
-    std::string getPlayerName(){
-        return config_values[NAME];
-    }
-
-    std::string getPlayerSpritePath(){
-        return config_values[SPRITE];
-    }
-
-    int getPlayerMsBeetwenEachFrames(){
-        return (unsigned  int) std::stoul(config_values[FRAME_MS]);
-    }
-
-    int getPlayerFrames(){
-        return (unsigned int) std::stoul(config_values[FRAMES]);
-    }
+    std::string getDefaultConfType();
+    std::string getDefaultTranslationFile();
+    std::string getStartingLevel();
+    bool shouldShowFps();
+    unsigned int getFramerate();
+    std::string getDefaultFont();
+    std::string addPathAndTypeToInclude(std::string name);
+    std::string getAppName();
+    std::string getTranslationEscapeChar();
+    std::string getPlayerName();
+    std::string getPlayerSpritePath();
+    int getPlayerMsBeetwenEachFrames();
+    int getPlayerFrames();
 
 private:
 

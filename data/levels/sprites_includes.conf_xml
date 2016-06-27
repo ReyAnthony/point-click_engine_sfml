@@ -8,3 +8,6 @@
 <provide name="providen_frames_pirate3">6</provide>
 
 <provide name="providen_sprite_table">./data/sprites/table-1.png</provide>
+<provide name="providen_sprite_table2">./data/sprites/table-2.png</provide>
+<provide name="providen_sprite_table3">./data/sprites/table-3.png</provide>
+<provide name="providen_sprite_table4">./data/sprites/table-4.png</provide>

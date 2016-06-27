@@ -4,17 +4,22 @@
 <level name="providen_level_1_name">
     <music> providen_music_truc </music>
     <background> providen_background_level </background>
-    <starting-position pos_x="100" pos_y="350"/>
+    <starting-position pos_x="700" pos_y="350"/>
 
     <!-- dynamic objetcs -->
     <object name="providen_suspended_pirate_name" sprite="providen_sprite_pirate3" pos_x="655" pos_y="110" frames="6" ms="120" >
         <see>
             <say> #--what-does-he-say </say>
-        </see>
+        </see>r
     </object>
 
     <!-- static objects -->
+    <object name="#--table" sprite="providen_sprite_table4" pos_x="945" pos_y="200" y_limit="320"/>
+    <object name="test" sprite="providen_sprite_player" pos_x="945" pos_y="350" y_limit="240"/>
+    <object name="#--table" sprite="providen_sprite_table2" pos_x="430" pos_y="425" y_limit="110"/>
+    <object name="#--table" sprite="providen_sprite_table3" pos_x="670" pos_y="490" y_limit="110"/>
     <object name="#--table" sprite="providen_sprite_table" pos_x="80" pos_y="505" y_limit="110"/>
+
 
     <!-- si position relative du sprite à tester
             plus bas y_limit (centre de l'objet + y_limit) alors il est devant -->
