@@ -8,7 +8,7 @@ Object::Object() {
 
 }
 
-Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames, int ms_beetwen_frames) {
+Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames, int ms_beetwen_frames, int y_limit) {
 
     //TODO throw exception if frame / ms / pos / wrong  etc...
     //TODO add sprite priority
@@ -17,17 +17,10 @@ Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file,
 
     this->ms_beetwen_frames = ms_beetwen_frames;
     this->frames = frames;
+    this->y_limit = y_limit;
 
     if(frames > 1)
         this->animated = true;
-
-    initTextureAndSprite(texture_file);
-    sprite.setPosition(pos_x, pos_y);
-}
-
-Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file) {
-
-    this->name = name;
 
     initTextureAndSprite(texture_file);
     sprite.setPosition(pos_x, pos_y);
@@ -46,6 +39,8 @@ Object &Object::operator=(const Object& ref) {
     frames = ref.frames;
     ms_beetwen_frames = ref.ms_beetwen_frames;
 
+    y_limit = ref.y_limit;
+
     elapsed_time = ref.elapsed_time;
 
     return *this;
@@ -62,6 +57,9 @@ Object::Object(const Object& ref) {
     animated = ref.animated;
     frames = ref.frames;
     ms_beetwen_frames = ref.ms_beetwen_frames;
+
+    y_limit = ref.y_limit;
+
 
     elapsed_time = ref.elapsed_time;
 
@@ -123,4 +121,24 @@ void Object::initTextureAndSprite(std::string texture_file) {
 
         this->sprite.setTextureRect(sf::IntRect(x, y, x_max, y_max));
     }
+}
+
+int Object::getPosY() {
+    return sprite.getPosition().y;
+}
+
+int Object::getPosX() {
+    return sprite.getPosition().x;
+}
+
+int Object::getYLimit() {
+    return y_limit;
+}
+
+int Object::getHeight() {
+    return texture.getSize().y;
+}
+
+int Object::getWidth() {
+    return texture.getSize().x;
 }

@@ -96,6 +96,21 @@ void Application::gameLoop() {
         while (window->pollEvent(event))
         {
 
+            auto current_pos_x = current_scene->getPlayer().getPosX();
+            auto current_pos_y = current_scene->getPlayer().getPosY();
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                current_scene->getPlayer().setPosX(current_pos_x - 10);
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                current_scene->getPlayer().setPosX(current_pos_x + 10);
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                current_scene->getPlayer().setPosY(current_pos_y - 10);
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                current_scene->getPlayer().setPosY(current_pos_y + 10);
+
+
+
             if (event.type == sf::Event::Closed)
             {
                 window->close();

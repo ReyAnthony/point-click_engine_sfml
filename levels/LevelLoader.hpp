@@ -44,6 +44,13 @@ private:
         return attr;
     }
 
+    template <class T>
+    T getAttributeWithDefaultValue(std::string attribute, pt::ptree::value_type &v, T defaultValue){
+
+        auto attr = v.second.get("<xmlattr>."+attribute, defaultValue);
+        return attr;
+    }
+
     std::string getAttributeAsString(std::string attribute, pt::ptree::value_type &v);
     std::string getValue(pt::ptree::value_type &v);
     std::string provideAndTranslate(std::string value);

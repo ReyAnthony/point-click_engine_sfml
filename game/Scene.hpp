@@ -21,6 +21,8 @@ public:
     void addPlayer(Object& player);
     void addObject(Object& object);
 
+    Object & getPlayer();
+
     void update(sf::Time& deltaTime);
 
 private:
@@ -29,9 +31,11 @@ private:
 
     std::string level_name;
     std::vector<Object> objects;
+    std::vector<Object*> drawing_list;
     Object background;
     Object player;
 };
+
 
 
 #endif //SFML_TEST_SCENE_HPP

@@ -48,18 +48,36 @@ void Scene::addObject(Object& object) {
 
 void Scene::update(sf::Time& deltaTime) {
 
+    drawing_list.clear();
+
     for(Object& obj : objects){
         obj.update(deltaTime);
+        drawing_list.push_back(&obj);
     }
+
+    drawing_list.push_back(&player);
+
+    std::sort(drawing_list.begin(), drawing_list.end(),
+              [this](Object* a, Object* b) {
+
+                  auto player = (this->player.getPosY()+ this->player.getHeight());
+                  auto other = (b->getPosY() + b->getYLimit());
+
+                  //if player < other then it is behind it (drawn before)
+                  return player < other;
+              });
+
 }
 
 void Scene::draw(sf::RenderTarget& target, sf::RenderStates) const {
 
     target.draw(background);
 
-    for(const sf::Drawable& obj : objects){
-        target.draw(obj);
+    for(const sf::Drawable* obj : drawing_list){
+        target.draw(*obj);
     }
+}
 
-    target.draw(player);
+Object &Scene::getPlayer() {
+    return player;
 }

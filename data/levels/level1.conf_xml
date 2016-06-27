@@ -14,8 +14,10 @@
     </object>
 
     <!-- static objects -->
-    <object name="#--table" sprite="providen_sprite_table" pos_x="60" pos_y="510"/>
+    <object name="#--table" sprite="providen_sprite_table" pos_x="80" pos_y="505" y_limit="110"/>
 
+    <!-- si position relative du sprite à tester
+            plus bas y_limit (centre de l'objet + y_limit) alors il est devant -->
 
 
 </level>

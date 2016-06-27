@@ -94,20 +94,14 @@ void LevelLoader::walk(pt::ptree& tree, std::string key, Scene& scene) {
                             auto pos_y = getAttribute<int>("pos_y", v);
                             auto pos_x = getAttribute<int>("pos_x", v);
 
-                            try{
+                            //optional
+                            auto frames = getAttributeWithDefaultValue("frames", v, 1);
+                            auto ms = getAttributeWithDefaultValue("ms", v, 0);
+                            auto y_limit = getAttributeWithDefaultValue("y_limit", v, -5000);
 
-                                auto frames = getAttribute<int>("frames", v);
-                                auto ms = getAttribute<int>("ms", v);
+                            Object obj(obj_name, pos_x, pos_y, sprite, frames, ms, y_limit);
+                            scene.addObject(obj);
 
-                                Object obj(obj_name, pos_x, pos_y, sprite, frames, ms);
-                                scene.addObject(obj);
-                            }
-                            catch(boost::exception & e)
-                            {
-                                //if no frames / ms (optional)
-                                Object obj(obj_name, pos_x, pos_y, sprite);
-                                scene.addObject(obj);
-                            }
                         }
                     }
 

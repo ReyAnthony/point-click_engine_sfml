@@ -12,6 +12,8 @@
 #include "levels/LevelLoader.hpp"
 #include "exceptions/ExceptionScene.hpp"
 
+#include <SFML/Window/Keyboard.hpp>
+
 #include <stack>
 
 class Application {

@@ -16,14 +16,19 @@ class Object : public sf::Drawable {
 public:
 
     Object();
-    Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames, int ms_beetwen_frames);
-    Object(std::string name, int pos_x, int pos_y, std::string texture_file);
+    Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames = 1, int ms_beetwen_frames = 0,
+           int y_limit = -5000);
     Object & operator=(const Object& ref);
     Object(const Object& ref);
 
     void update(sf::Time& deltaTime);
     void setPosX(int pos_x);
     void setPosY(int pos_y);
+    int getPosX();
+    int getPosY();
+    int getYLimit();
+    int getHeight();
+    int getWidth();
 
 private:
 
@@ -38,6 +43,8 @@ private:
     int ms_beetwen_frames = 0;
     int frames = 1;
     int current_frame = 0;
+    //par convention -5000 = desactivé
+    int y_limit = -5000;
 
     bool animated = false;
 };
