@@ -3,6 +3,7 @@
 //
 
 #include "Object.hpp"
+#include "../exceptions/Exception.hpp"
 
 Object::Object() {
 
@@ -110,7 +111,7 @@ void Object::initTextureAndSprite(std::string texture_file) {
         this->sprite.setTexture(texture);
     }
     else
-        std::cerr << "failed to load the texture" << std::endl;
+       throw Exception("Failed to load the texture " + texture_file);
 
     if(animated){
 

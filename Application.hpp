@@ -22,6 +22,9 @@ public:
     ~Application();
     void start();
 
+    static const int HEIGHT;
+    static const int WIDTH;
+
 private:
 
     void run();

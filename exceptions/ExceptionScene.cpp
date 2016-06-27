@@ -3,6 +3,7 @@
 //
 
 #include "ExceptionScene.hpp"
+#include "../Application.hpp"
 
 ExceptionScene::ExceptionScene(std::string default_font_path, Exception& exception) : Scene() {
 
@@ -43,4 +44,11 @@ ExceptionScene &ExceptionScene::operator=(const ExceptionScene& ref) {
 void ExceptionScene::draw(sf::RenderTarget& target, sf::RenderStates) const {
 
     target.draw(text);
+}
+
+void ExceptionScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
+    sf::View camera;
+    camera.reset(sf::FloatRect(0,0, Application::WIDTH, Application::HEIGHT));
+    camera.setCenter(Application::WIDTH / 2, Application::HEIGHT / 2);
+    window.setView(camera);
 }

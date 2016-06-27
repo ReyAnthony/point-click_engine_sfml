@@ -24,15 +24,17 @@ public:
 
     Object & getPlayer();
 
-    void update(sf::Time& deltaTime);
+    void virtual update(sf::Time& deltaTime,  sf::RenderWindow& window);
 
 private:
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates) const;
+    void updateDrawingPriorities();
 
     std::string level_name;
     std::vector<Object> objects;
     std::vector<Object*> drawing_list;
+
     Object background;
     Object player;
 };

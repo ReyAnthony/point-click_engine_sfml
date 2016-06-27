@@ -3,6 +3,7 @@
 //
 
 #include "Scene.hpp"
+#include "../Application.hpp"
 
 Scene::Scene() {
 
@@ -44,6 +45,8 @@ void Scene::addPlayer(Object& player) {
 void Scene::addObject(Object& object) {
 
     objects.push_back(object);
+
+    //we sort the objects so that they in their priority order
     std::sort(objects.begin(), objects.end(),
               [this](Object& a, Object& b) {
                   auto tested = (a.getPosY() + a.getYLimit());
@@ -53,7 +56,12 @@ void Scene::addObject(Object& object) {
               });
 }
 
-void Scene::update(sf::Time& deltaTime) {
+void Scene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
+
+    sf::View camera;
+    camera.reset(sf::FloatRect(0,0, Application::WIDTH, Application::HEIGHT));
+    camera.setCenter(player.getPosX(), Application::HEIGHT / 2);
+    window.setView(camera);
 
     drawing_list.clear();
 
@@ -61,19 +69,23 @@ void Scene::update(sf::Time& deltaTime) {
         obj.update(deltaTime);
     }
 
-    /*
-    std::sort(drawing_list.begin(), drawing_list.end(),
-              [this](Object* a, Object* b) {
+    updateDrawingPriorities();
+}
 
-                  auto player = (this->player.getPosY()+ this->player.getHeight());
-                  auto other = (b->getPosY() + b->getYLimit());
+void Scene::draw(sf::RenderTarget& target, sf::RenderStates) const {
 
-                  //if player < other then it is behind it (drawn before)
-                  return player < other;
-              });
-      */
+    target.draw(background);
 
-    //take the list and insert the player where it should be
+    for(const sf::Drawable* obj : drawing_list){
+        target.draw(*obj);
+    }
+}
+
+Object &Scene::getPlayer() {
+    return player;
+}
+
+void Scene::updateDrawingPriorities() {
 
     int index_insert_player = 0;
     int current_index = 0;
@@ -91,17 +103,4 @@ void Scene::update(sf::Time& deltaTime) {
 
     auto iter = drawing_list.begin();
     drawing_list.insert(iter + index_insert_player, &player);
-}
-
-void Scene::draw(sf::RenderTarget& target, sf::RenderStates) const {
-
-    target.draw(background);
-
-    for(const sf::Drawable* obj : drawing_list){
-        target.draw(*obj);
-    }
-}
-
-Object &Scene::getPlayer() {
-    return player;
 }

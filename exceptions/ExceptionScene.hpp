@@ -17,6 +17,8 @@ public:
     ExceptionScene(const ExceptionScene& ref);
     ExceptionScene & operator=(const ExceptionScene& ref);
 
+    void update(sf::Time& deltaTime, sf::RenderWindow& window);
+
 private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates) const;

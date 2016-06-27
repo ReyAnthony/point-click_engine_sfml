@@ -11,3 +11,6 @@
 <provide name="providen_sprite_table2">./data/sprites/table-2.png</provide>
 <provide name="providen_sprite_table3">./data/sprites/table-3.png</provide>
 <provide name="providen_sprite_table4">./data/sprites/table-4.png</provide>
+<provide name="providen_sprite_table5">./data/sprites/table-5.png</provide>
+
+<provide name="providen_sprite_draperie">./data/sprites/draperie.png</provide>

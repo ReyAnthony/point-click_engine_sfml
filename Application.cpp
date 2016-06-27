@@ -26,7 +26,8 @@ void Application::start() {
                                       0,
                                       conf.getPlayerSpritePath(),
                                       conf.getPlayerFrames(),
-                                      conf.getPlayerMsBeetwenEachFrames());
+                                      conf.getPlayerMsBeetwenEachFrames(),
+                                      0 /*ignored for the player*/);
 
         //Creer une classe qui renvoie le translateur a utiliser
         if (conf.getDefaultConfType() == "conf_xml")
@@ -70,8 +71,11 @@ void Application::run() {
 }
 
 void Application::initRenderer() {
-    window = new sf::RenderWindow(sf::VideoMode(1280, 720), conf.getAppName());
+
+    window = new sf::RenderWindow(sf::VideoMode(Application::WIDTH, Application::HEIGHT), conf.getAppName());
     window->setFramerateLimit(conf.getFramerate());
+    sf::View camera;
+    camera.reset(sf::FloatRect(0, 0, Application::WIDTH, Application::HEIGHT));
 
     //replace by a FPS displayer class ?
     if(show_fps){
@@ -96,6 +100,8 @@ void Application::gameLoop() {
         while (window->pollEvent(event))
         {
 
+            //TODO FOR TESTING PURPOSE
+            //FOR TESTING PURPOSE
             auto current_pos_x = current_scene->getPlayer().getPosX();
             auto current_pos_y = current_scene->getPlayer().getPosY();
 
@@ -108,7 +114,8 @@ void Application::gameLoop() {
                 current_scene->getPlayer().setPosY(current_pos_y - 10);
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 current_scene->getPlayer().setPosY(current_pos_y + 10);
-
+            //FOR TESTING PURPOSE
+            //FOR TESTING PURPOSE
 
 
             if (event.type == sf::Event::Closed)
@@ -119,7 +126,7 @@ void Application::gameLoop() {
         }
 
         window->clear(sf::Color::Black);
-        current_scene->update(time_for_frame);
+        current_scene->update(time_for_frame, *window);
         window->draw(*current_scene);
 
         if(show_fps){
@@ -136,3 +143,6 @@ void Application::gameLoop() {
 void Application::cleanup() {
     //utilisé pour des clean qui ne touchent pas la mémoire ?
 }
+
+const int Application::HEIGHT = 720;
+const int Application::WIDTH = 1280;
