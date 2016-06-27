@@ -13,15 +13,8 @@ class Exception {
 
 public:
 
-    Exception(std::string error_message)
-    {
-        this->error_message = error_message;
-    }
-
-    std::string getErrorMessage()
-    {
-        return error_message;
-    }
+    Exception(std::string error_message);
+    std::string getErrorMessage();
 
 private:
     std::string error_message;

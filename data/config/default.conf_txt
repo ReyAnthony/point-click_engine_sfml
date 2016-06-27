@@ -1,12 +1,13 @@
 [config]
 default-conf-type = conf_xml
-game-name = Ceci n'est pas une pipe
+game-name = ! Monkey Island
+framerate = 30
 
 [paths]
 translations-dir = ./data/translations
 levels-dir = ./data/levels
 actions-dir = ./data/actions
-fonts-dir = ./data/fonts/
+fonts-dir = ./data/fonts
 
 [translations]
 default-lang = EN
@@ -19,5 +20,11 @@ starting-level = level1
 [fonts]
 default-font = GlacialIndifference-Regular.otf
 
+[GUI]
+show-fps = true
 
-
+[player]
+ms = 120
+sprite = ./data/sprites/pirate0.png
+name = Guybrush Threepwood
+frames = 1

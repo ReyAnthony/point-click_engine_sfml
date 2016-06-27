@@ -2,5 +2,6 @@
     <key name="level_1_name"> Le niveau 1 </key>
     <key name="action_see"> Regarder </key>
     <key name="cant_look"> Je ne peux pas regarder ça ! </key>
-    <key name="suspended_pirate"> Le pirate suspendu</key>
+    <key name="suspended_pirate"> le pirate suspendu</key>
+    <key name="table"> une table </key>
 </dict>

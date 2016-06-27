@@ -12,6 +12,7 @@
 #include <boost/algorithm/string.hpp>
 #include "TranslationReader.hpp"
 #include "../exceptions/Exception.hpp"
+#include <boost/exception/diagnostic_information.hpp>
 
 namespace pt = boost::property_tree;
 

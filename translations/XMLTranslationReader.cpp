@@ -10,24 +10,27 @@ XMLTranslationReader::XMLTranslationReader(std::string filename) {
 
 std::string XMLTranslationReader::getTranslationFromKey(std::string key) {
 
-    pt::ptree tree;
-    pt::read_xml(filename, tree);
+    try {
+        pt::ptree tree;
+        pt::read_xml(filename, tree);
 
-    BOOST_FOREACH(pt::ptree::value_type &v, tree.get_child(DICTIONNARY))
-                {
-                    //if the "name" attr of the current tag is the one we look for
-                    if(v.second.get<std::string>("<xmlattr>." + NAME_ATTR) == key)
-                    {
-                        //the value of the tag
-                        auto data_to_return = v.second.data();
-                        if(data_to_return != "<xmlattr>")
-                        {
-                            boost::trim(data_to_return);
-                            return data_to_return;
+        BOOST_FOREACH(pt::ptree::value_type & v, tree.get_child(DICTIONNARY)) {
+                        //if the "name" attr of the current tag is the one we look for
+                        if (v.second.get<std::string>("<xmlattr>." + NAME_ATTR) == key) {
+                            //the value of the tag
+                            auto data_to_return = v.second.data();
+                            if (data_to_return != "<xmlattr>") {
+                                boost::trim(data_to_return);
+                                return data_to_return;
+                            }
+                            break;
                         }
-                        break;
                     }
-                }
 
-    throw Exception("No Such key : " + key + " in " + filename);
+        throw Exception("No Such key : " + key + " in " + filename);
+    }
+    catch(boost::exception &e){
+        throw Exception(boost::diagnostic_information(e));
+    }
+
 }

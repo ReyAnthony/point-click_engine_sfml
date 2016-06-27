@@ -10,10 +10,12 @@
 #include <boost/property_tree/ini_parser.hpp>
 #include <set>
 #include <iostream>
-#include <array>
+#include <list>
 #include <map>
 #include <algorithm>
+#include <boost/exception/diagnostic_information.hpp>
 #include "../exceptions/Exception.hpp"
+
 
 namespace pt = boost::property_tree;
 
@@ -24,26 +26,32 @@ public:
     void loadConfiguration(){
 
         pt::ptree tree;
-        pt::ini_parser::read_ini(CONFIG_FILE, tree);
+
+        try{
+            pt::ini_parser::read_ini(CONFIG_FILE, tree);
+        }
+        catch(boost::exception &e){
+            throw Exception(boost::diagnostic_information(e));
+        }
 
         try{
 
-            for(int i = 0; i < key_count; ++i){
+            for(auto key : keys){
 
-                std::string retrieved_key = tree.get<std::string>(keys[i]);
-                config_values.insert(std::pair<std::string, std::string>(keys[i], retrieved_key));
+                std::string retrieved_key = tree.get<std::string>(key);
+                config_values.insert(std::pair<std::string, std::string>(key, retrieved_key));
             }
         }
-        catch( boost::exception & e ){
+        catch(boost::exception & e){
             throw Exception("No such key in " + CONFIG_FILE);
         }
     }
 
-    std::map<std::string, std::string>& getConfigurationValues(){
-        return config_values;
-    };
+    std::string getDefaultConfType() {
+        return config_values[DEFAULT_CONF_TYPE];
+    }
 
-    std::string getDefaultTranslationFile() {
+     std::string getDefaultTranslationFile() {
 
         auto translation_dir = config_values[TRANSLATION_DIR];
         auto default_dct_filename = config_values[DEFAULT_DCT];
@@ -62,6 +70,15 @@ public:
         return translation_dir +"/"+ default_level_filename + "." + default_conf_type;
     }
 
+    bool shouldShowFps(){
+
+        return config_values[FPS] == "true";
+    }
+
+    unsigned int getFramerate(){
+        return std::stoul(config_values[FRAME_RATE]);
+    }
+
     std::string getDefaultFont() {
         auto fonts_dir = config_values[FONTS_DIR];
         auto default_font = config_values[DEFAULT_FONT];
@@ -77,14 +94,33 @@ public:
         return path;
     }
 
-    std::string getAppName()
-    {
+    std::string getAppName() {
+
         return config_values[GAME_NAME];
     }
 
-    ~TxtConfReader(){
-
+    std::string getTranslationEscapeChar(){
+        return config_values[ESCAPE_CHAR];
     }
+
+    //TODO ça devrait etre dans un fichier de conf XML JSON et lu par le parseur
+    std::string getPlayerName(){
+        return config_values[NAME];
+    }
+
+    std::string getPlayerSpritePath(){
+        return config_values[SPRITE];
+    }
+
+    int getPlayerMsBeetwenEachFrames(){
+        return (unsigned  int) std::stoul(config_values[FRAME_MS]);
+    }
+
+    int getPlayerFrames(){
+        return (unsigned int) std::stoul(config_values[FRAMES]);
+    }
+
+private:
 
     //TRANSLATIONS section
     const std::string ESCAPE_CHAR = "translations.translation-escape-char";
@@ -100,23 +136,30 @@ public:
     //CONFIG section
     const std::string DEFAULT_CONF_TYPE = "config.default-conf-type";
     const std::string GAME_NAME = "config.game-name";
+    const std::string FRAME_RATE = "config.framerate";
 
     //LEVEL section
     const std::string STARTING_LEVEL= "levels.starting-level";
 
+    //GUI section
+    const std::string FPS = "GUI.show-fps";
 
     //FONTS section
     const std::string DEFAULT_FONT ="fonts.default-font";
 
+    //PLAYER section
+    const std::string FRAME_MS = "player.ms";
+    const std::string SPRITE = "player.sprite";
+    const std::string NAME = "player.name";
+    const std::string FRAMES = "player.frames";
 
-private:
 
     const std::string CONFIG_FILE = "./data/config/default.conf_txt";
-    static const int key_count = 11;
-    std::array<std::string, key_count> keys = {ESCAPE_CHAR, DEFAULT_DCT, DEFAULT_LANG,
-                                                TRANSLATION_DIR, LEVELS_DIR, ACTIONS_DIR,
-                                                DEFAULT_CONF_TYPE, GAME_NAME, STARTING_LEVEL,
-                                               DEFAULT_FONT, FONTS_DIR};
+    std::list<std::string> keys = {ESCAPE_CHAR, DEFAULT_DCT, DEFAULT_LANG,
+                                   TRANSLATION_DIR, LEVELS_DIR, ACTIONS_DIR,
+                                   DEFAULT_CONF_TYPE, GAME_NAME, STARTING_LEVEL,
+                                   DEFAULT_FONT, FONTS_DIR, FPS, FRAME_RATE, FRAME_MS,
+                                    SPRITE, NAME, FRAMES};
 
     std::map<std::string, std::string> config_values;
 };

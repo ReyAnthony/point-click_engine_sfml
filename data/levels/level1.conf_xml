@@ -2,18 +2,22 @@
 <include>character_names</include>
 
 <level name="providen_level_1_name">
+    <music> providen_music_truc </music>
     <background> providen_background_level </background>
-    <object name="un personnage" sprite="providen_sprite_player" pos_x="100" pos_y="300">
+    <starting-position pos_x="100" pos_y="350"/>
+
+    <!-- dynamic objetcs -->
+    <object name="providen_suspended_pirate_name" sprite="providen_sprite_pirate3" pos_x="655" pos_y="110" frames="6" ms="120" >
         <see>
             <say> #--what-does-he-say </say>
         </see>
     </object>
 
-    <object name="providen_suspended_pirate_name" sprite="providen_sprite_pirate3" pos_x="655" pos_y="110" frames="6" ms="120">
-        <see>
-            <say> #--what-does-he-say </say>
-        </see>
-    </object>
+    <!-- static objects -->
+    <object name="#--table" sprite="providen_sprite_table" pos_x="60" pos_y="510"/>
+
+
+
 </level>
 
 
