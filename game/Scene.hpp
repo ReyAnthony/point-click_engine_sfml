@@ -21,8 +21,9 @@ public:
     void addBackground(std::string background_file);
     void addPlayer(Object& player);
     void addObject(Object& object);
+    Object & getLastInsertedObject();
 
-    Object & getPlayer();
+    Object& getPlayer();
 
     void virtual update(sf::Time& deltaTime,  sf::RenderWindow& window);
 

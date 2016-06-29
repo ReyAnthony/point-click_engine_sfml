@@ -71,7 +71,7 @@ void LevelLoader::walk(pt::ptree& tree, std::string key, Scene& scene) {
                     if(node_type !=""){
                         if(node_type == "level"){
 
-                            auto level_name = getAttributeAsString("name", v);
+                            auto level_name = getAttributeAsTranslatedString("name", v);
                             scene.setName(level_name);
                         }
                         if(node_type == "background"){
@@ -87,10 +87,14 @@ void LevelLoader::walk(pt::ptree& tree, std::string key, Scene& scene) {
                             player.setPosX(x);
                             player.setPosY(y);
                         }
+                        if(node_type == "collider"){
+                            Object& lastInsertedObject = scene.getLastInsertedObject();
+                        }
+
                         if(node_type == "object"){
 
-                            auto obj_name = getAttributeAsString("name", v);
-                            auto sprite = getAttributeAsString("sprite", v);
+                            auto obj_name = getAttributeAsTranslatedString("name", v);
+                            auto sprite = getAttributeAsTranslatedString("sprite", v);
                             auto pos_y = getAttribute<int>("pos_y", v);
                             auto pos_x = getAttribute<int>("pos_x", v);
 
@@ -101,7 +105,6 @@ void LevelLoader::walk(pt::ptree& tree, std::string key, Scene& scene) {
 
                             Object obj(obj_name, pos_x, pos_y, sprite, frames, ms, y_limit);
                             scene.addObject(obj);
-
                         }
                     }
 
@@ -109,7 +112,7 @@ void LevelLoader::walk(pt::ptree& tree, std::string key, Scene& scene) {
                 }
 }
 
-std::string LevelLoader::getAttributeAsString(std::string attribute, pt::ptree::value_type &v) {
+std::string LevelLoader::getAttributeAsTranslatedString(std::string attribute, pt::ptree::value_type &v) {
 
     auto attr = v.second.get<std::string>("<xmlattr>."+attribute);
     return provideAndTranslate(attr);

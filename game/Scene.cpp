@@ -104,3 +104,7 @@ void Scene::updateDrawingPriorities() {
     auto iter = drawing_list.begin();
     drawing_list.insert(iter + index_insert_player, &player);
 }
+
+Object &Scene::getLastInsertedObject() {
+    return *objects.end();
+}

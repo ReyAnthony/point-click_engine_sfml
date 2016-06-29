@@ -117,7 +117,6 @@ void Application::gameLoop() {
             //FOR TESTING PURPOSE
             //FOR TESTING PURPOSE
 
-
             if (event.type == sf::Event::Closed)
             {
                 window->close();

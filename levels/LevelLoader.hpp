@@ -14,10 +14,13 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <list>
 #include <map>
+
 #include "../game/Scene.hpp"
 #include "../translations/TranslationReader.hpp"
 #include "../conf/ConfReader.hpp"
 #include "../game/Object.hpp"
+
+
 
 namespace pt = boost::property_tree;
 
@@ -30,12 +33,6 @@ public:
                 Object& player);
 
     Scene * generateDataFromLevelFile(std::string levelFile);
-
-private:
-
-    Scene * generateScene(pt::ptree& tree, std::list<std::string> include_files);
-    std::map<std::string, std::string> generateIncludeData(std::list<std::string>& include_files);
-    void walk(pt::ptree& tree, std::string key, Scene& scene);
 
     template <class T>
     T getAttribute(std::string attribute, pt::ptree::value_type &v){
@@ -51,8 +48,15 @@ private:
         return attr;
     }
 
-    std::string getAttributeAsString(std::string attribute, pt::ptree::value_type &v);
+    std::string getAttributeAsTranslatedString(std::string attribute, pt::ptree::value_type &v);
     std::string getValue(pt::ptree::value_type &v);
+
+private:
+
+    Scene * generateScene(pt::ptree& tree, std::list<std::string> include_files);
+    std::map<std::string, std::string> generateIncludeData(std::list<std::string>& include_files);
+    void walk(pt::ptree& tree, std::string key, Scene& scene);
+
     std::string provideAndTranslate(std::string value);
 
     TranslationReader& translation_reader;
