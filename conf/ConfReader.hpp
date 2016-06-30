@@ -28,10 +28,9 @@ public:
     std::string getDefaultConfType();
     std::string getDefaultTranslationFile();
     std::string getStartingLevel();
-    bool shouldShowFps();
     unsigned int getFramerate();
     std::string getDefaultFont();
-    std::string addPathAndTypeToInclude(std::string name);
+    std::string prependLevelPathAndAppendFileType(std::string name);
     std::string getAppName();
     std::string getTranslationEscapeChar();
     std::string getPlayerName();
@@ -60,9 +59,6 @@ private:
     //LEVEL section
     const std::string STARTING_LEVEL= "levels.starting-level";
 
-    //GUI section
-    const std::string FPS = "GUI.show-fps";
-
     //FONTS section
     const std::string DEFAULT_FONT ="fonts.default-font";
 
@@ -77,7 +73,7 @@ private:
     std::list<std::string> keys = {ESCAPE_CHAR, DEFAULT_DCT, DEFAULT_LANG,
                                    TRANSLATION_DIR, LEVELS_DIR, ACTIONS_DIR,
                                    DEFAULT_CONF_TYPE, GAME_NAME, STARTING_LEVEL,
-                                   DEFAULT_FONT, FONTS_DIR, FPS, FRAME_RATE, FRAME_MS,
+                                   DEFAULT_FONT, FONTS_DIR, FRAME_RATE, FRAME_MS,
                                     SPRITE, NAME, FRAMES};
 
     std::map<std::string, std::string> config_values;

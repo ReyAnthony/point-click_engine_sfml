@@ -8,14 +8,15 @@
 #include <vector>
 #include <list>
 #include "Object.hpp"
+#include "AbstractScene.hpp"
 
-class Scene : public sf::Drawable {
+class GameScene : public AbstractScene {
 
 public:
 
-    Scene();
-    Scene(const Scene& ref);
-    Scene & operator=(const Scene& ref);
+    GameScene(Object& player);
+    GameScene(const GameScene & ref);
+    GameScene & operator=(const GameScene & ref);
 
     void setName(std::string level_name);
     void addBackground(std::string background_file);
@@ -37,7 +38,7 @@ private:
     std::vector<Object*> drawing_list;
 
     Object background;
-    Object player;
+    Object& player;
 };
 
 

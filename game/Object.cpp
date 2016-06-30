@@ -11,9 +11,6 @@ Object::Object() {
 
 Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames, int ms_beetwen_frames, int y_limit) {
 
-    //TODO throw exception if frame / ms / pos / wrong  etc...
-    //TODO add sprite priority
-
     this->name = name;
 
     this->ms_beetwen_frames = ms_beetwen_frames;
@@ -142,4 +139,16 @@ int Object::getHeight() {
 
 int Object::getWidth() {
     return texture.getSize().x;
+}
+
+void Object::notify(sf::Event& event) {
+    if(event.type == sf::Event::MouseButtonPressed){
+
+        auto x = event.mouseButton.x;
+        auto y = event.mouseButton.y;
+
+        if(sprite.getGlobalBounds().contains(x, y)){
+            std::cout << name << " clicked" << std::endl;
+        }
+    }
 }

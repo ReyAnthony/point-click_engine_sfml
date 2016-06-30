@@ -51,11 +51,6 @@ std::string TxtConfReader::getStartingLevel() {
     return translation_dir +"/"+ default_level_filename + "." + default_conf_type;
 }
 
-bool TxtConfReader::shouldShowFps() {
-
-    return config_values[FPS] == "true";
-}
-
 unsigned int TxtConfReader::getFramerate() {
     return std::stoul(config_values[FRAME_RATE]);
 }
@@ -67,7 +62,7 @@ std::string TxtConfReader::getDefaultFont() {
     return fonts_dir + "/" + default_font;
 }
 
-std::string TxtConfReader::addPathAndTypeToInclude(std::string name) {
+std::string TxtConfReader::prependLevelPathAndAppendFileType(std::string name) {
 
     auto path =  config_values[LEVELS_DIR] + "/" + name + "."  + config_values[DEFAULT_CONF_TYPE];
     path.erase(remove_if(path.begin(),path.end(),isspace),path.end());

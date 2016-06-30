@@ -6,10 +6,10 @@
 #define SFML_TEST_EXCEPTIONSCENE_HPP
 
 
-#include "../game/Scene.hpp"
 #include "../exceptions/Exception.hpp"
+#include "../game/AbstractScene.hpp"
 
-class ExceptionScene : public Scene {
+class ExceptionScene : public AbstractScene {
 
 public:
 

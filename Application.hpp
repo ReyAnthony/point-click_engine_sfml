@@ -7,12 +7,15 @@
 
 #include "translations/TranslationReader.hpp"
 #include "translations/XMLTranslationReader.hpp"
-#include "game/Scene.hpp"
+#include "game/GameScene.hpp"
 #include "conf/ConfReader.hpp"
 #include "levels/LevelLoader.hpp"
 #include "exceptions/ExceptionScene.hpp"
+#include "events/EventDispatcher.hpp"
+#include "game/Player.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
 
 #include <stack>
 
@@ -32,9 +35,8 @@ private:
     void gameLoop();
     void cleanup();
 
-    Scene* current_scene;
+    AbstractScene* current_scene;
     bool running = false;
-    bool show_fps = false;
 
     sf::RenderWindow* window;
     sf::Clock clock;
@@ -42,12 +44,11 @@ private:
     TxtConfReader conf;
     TranslationReader* trad;
 
-    Object* player_character;
+    EventDispatcher eventDispatcher;
 
-    //FPS
-    sf::Text text;
-    sf::Font font;
+    Player* player_character;
 };
 
+TranslationReader *getTranslator(TxtConfReader& conf);
 
 #endif //SFML_TEST_APPLICATION_HPP

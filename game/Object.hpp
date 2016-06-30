@@ -10,8 +10,9 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include "../events/Observer.hpp"
 
-class Object : public sf::Drawable {
+class Object : public sf::Drawable, public Observer<sf::Event> {
 
 public:
 
@@ -30,6 +31,8 @@ public:
     int getHeight();
     int getWidth();
 
+    virtual void notify(sf::Event& event);
+
 private:
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates) const;
@@ -43,7 +46,6 @@ private:
     int ms_beetwen_frames = 0;
     int frames = 1;
     int current_frame = 0;
-    //par convention -5000 = desactivé
     int y_limit = -5000;
 
     bool animated = false;

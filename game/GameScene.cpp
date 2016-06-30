@@ -2,22 +2,21 @@
 // Created by Anthony REY on 25/05/2016.
 //
 
-#include "Scene.hpp"
+#include "GameScene.hpp"
 #include "../Application.hpp"
 
-Scene::Scene() {
+GameScene::GameScene(Object& player) : player(player){
 
 }
 
-Scene::Scene(const Scene& ref) {
+GameScene::GameScene(const GameScene & ref) : player(ref.player){
     background = ref.background;
 
     objects = ref.objects;
     level_name = ref.level_name;
-    player = ref.player;
 }
 
-Scene &Scene::operator=(const Scene& ref) {
+GameScene &GameScene::operator=(const GameScene & ref) {
 
     background = ref.background;
 
@@ -28,21 +27,21 @@ Scene &Scene::operator=(const Scene& ref) {
     return *this;
 }
 
-void Scene::setName(std::string level_name) {
+void GameScene::setName(std::string level_name) {
     this->level_name = level_name;
 }
 
-void Scene::addBackground(std::string background_file) {
+void GameScene::addBackground(std::string background_file) {
 
     Object background(background_file, 0, 0, background_file);
     this->background = background;
 }
 
-void Scene::addPlayer(Object& player) {
+void GameScene::addPlayer(Object& player) {
     this->player = player;
 }
 
-void Scene::addObject(Object& object) {
+void GameScene::addObject(Object& object) {
 
     objects.push_back(object);
 
@@ -56,7 +55,7 @@ void Scene::addObject(Object& object) {
               });
 }
 
-void Scene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
+void GameScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
 
     sf::View camera;
     camera.reset(sf::FloatRect(0,0, Application::WIDTH, Application::HEIGHT));
@@ -72,7 +71,7 @@ void Scene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
     updateDrawingPriorities();
 }
 
-void Scene::draw(sf::RenderTarget& target, sf::RenderStates) const {
+void GameScene::draw(sf::RenderTarget& target, sf::RenderStates) const {
 
     target.draw(background);
 
@@ -81,11 +80,11 @@ void Scene::draw(sf::RenderTarget& target, sf::RenderStates) const {
     }
 }
 
-Object &Scene::getPlayer() {
+Object &GameScene::getPlayer() {
     return player;
 }
 
-void Scene::updateDrawingPriorities() {
+void GameScene::updateDrawingPriorities() {
 
     int index_insert_player = 0;
     int current_index = 0;
@@ -105,6 +104,6 @@ void Scene::updateDrawingPriorities() {
     drawing_list.insert(iter + index_insert_player, &player);
 }
 
-Object &Scene::getLastInsertedObject() {
+Object &GameScene::getLastInsertedObject() {
     return *objects.end();
 }

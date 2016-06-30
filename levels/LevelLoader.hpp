@@ -15,12 +15,11 @@
 #include <list>
 #include <map>
 
-#include "../game/Scene.hpp"
+#include "../game/GameScene.hpp"
 #include "../translations/TranslationReader.hpp"
 #include "../conf/ConfReader.hpp"
 #include "../game/Object.hpp"
-
-
+#include "../events/EventDispatcher.hpp"
 
 namespace pt = boost::property_tree;
 
@@ -30,9 +29,11 @@ public:
 
     LevelLoader(TranslationReader& translation_reader,
                 TxtConfReader& configuration_reader,
-                Object& player);
+                Object& player, EventDispatcher& event_dispatcher);
 
-    Scene * generateDataFromLevelFile(std::string levelFile);
+    GameScene * generateDataFromLevelFile(std::string levelFile);
+
+private:
 
     template <class T>
     T getAttribute(std::string attribute, pt::ptree::value_type &v){
@@ -49,13 +50,13 @@ public:
     }
 
     std::string getAttributeAsTranslatedString(std::string attribute, pt::ptree::value_type &v);
-    std::string getValue(pt::ptree::value_type &v);
+    std::string getNodeValue(pt::ptree::value_type &v);
 
-private:
 
-    Scene * generateScene(pt::ptree& tree, std::list<std::string> include_files);
+
+    GameScene * generateScene(pt::ptree& tree, std::list<std::string> include_files);
     std::map<std::string, std::string> generateIncludeData(std::list<std::string>& include_files);
-    void walk(pt::ptree& tree, std::string key, Scene& scene);
+    void walk(pt::ptree& tree, GameScene & scene);
 
     std::string provideAndTranslate(std::string value);
 

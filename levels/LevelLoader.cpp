@@ -4,34 +4,41 @@
 
 #include "LevelLoader.hpp"
 
-Scene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
+LevelLoader::LevelLoader(TranslationReader& translation_reader,
+                         TxtConfReader& configuration_reader,
+                         Object& player, EventDispatcher& event_dispatcher)
+        : translation_reader(translation_reader), configuration_reader(configuration_reader),
+          player(player) {
+}
+
+GameScene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
 
     pt::ptree tree;
     pt::read_xml(levelFile, tree);
 
     std::list<std::string> include_files;
 
-    BOOST_FOREACH(pt::ptree::value_type &v, tree.get_child(""))
-                {
+    for(pt::ptree::value_type &v : tree.get_child(""))
+    {
 
-                    auto node_type = v.first;
-                    if(node_type != "" && node_type == "include")
-                    {
-                        auto include_file_with_path = configuration_reader.addPathAndTypeToInclude(v.second.data());
-                        include_files.push_back(include_file_with_path);
-                    }
-                }
+        auto node_type = v.first;
+        if(node_type != "" && node_type == "include")
+        {
+            auto node_value = getNodeValue(v);
+            auto include_file_with_path = configuration_reader.prependLevelPathAndAppendFileType(node_value);
+            include_files.push_back(include_file_with_path);
+        }
+    }
 
     return generateScene(tree, include_files);
 }
 
-Scene *LevelLoader::generateScene(pt::ptree& tree, std::list<std::string> include_files) {
+GameScene *LevelLoader::generateScene(pt::ptree& tree, std::list<std::string> include_files) {
 
     providen_values = generateIncludeData(include_files);
 
-    Scene* scene = new Scene();
-    walk(tree, "level", *scene);
-    scene->addPlayer(player);
+    GameScene * scene = new GameScene(player);
+    walk(tree, *scene);
     return scene;
 }
 
@@ -44,72 +51,72 @@ std::map<std::string, std::string> LevelLoader::generateIncludeData(std::list<st
         pt::ptree tree;
         pt::read_xml(file, tree);
 
-        BOOST_FOREACH(pt::ptree::value_type &v, tree.get_child(""))
-                    {
-                        auto node_type = v.first;
-                        if(node_type != "" && node_type == "provide"){
-                            auto name = v.second.get<std::string>("<xmlattr>.name");
-                            providen_values.insert(std::pair<std::string, std::string>(name, v.second.data()));
-                        }
-                    }
+        for(pt::ptree::value_type &v : tree.get_child(""))
+        {
+            auto node_type = v.first;
+            if(node_type != "" && node_type == "provide"){
+                auto name = getAttribute<std::string>("name", v);
+                auto content = getNodeValue(v);
+                providen_values.insert(std::pair<std::string, std::string>(name, content));
+            }
+        }
     }
 
     return providen_values;
 }
 
-void LevelLoader::walk(pt::ptree& tree, std::string key, Scene& scene) {
-    std::string new_key;
+void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
 
-    if(!key.empty()){
-        new_key = key + ".";
+    for(pt::ptree::value_type &v : tree.get_child(""))
+    {
+
+        auto node_type = v.first;
+
+        if(node_type !=""){
+            if(node_type == "level"){
+
+                auto level_name = getAttributeAsTranslatedString("name", v);
+                scene.setName(level_name);
+            }
+            if(node_type == "background"){
+
+                auto background = getNodeValue(v);
+                scene.addBackground(background);
+            }
+            if(node_type == "starting-position"){
+
+                auto x = getAttribute<int>("pos_x", v);
+                auto y = getAttribute<int>("pos_y", v);
+
+                player.setPosX(x);
+                player.setPosY(y);
+            }
+
+            if(node_type == "object"){
+
+                auto obj_name = getAttributeAsTranslatedString("name", v);
+                auto sprite = getAttributeAsTranslatedString("sprite", v);
+                auto pos_y = getAttribute<int>("pos_y", v);
+                auto pos_x = getAttribute<int>("pos_x", v);
+
+                //optional
+                auto frames = getAttributeWithDefaultValue<int>("frames", v, 1);
+                auto ms = getAttributeWithDefaultValue<int>("ms", v, 0);
+                auto y_limit = getAttributeWithDefaultValue<int>("y_limit", v, -5000);
+
+                Object obj(obj_name, pos_x, pos_y, sprite, frames, ms, y_limit);
+                scene.addObject(obj);
+
+            }
+
+            if(node_type == "collider"){
+                Object& lastInsertedObject = scene.getLastInsertedObject();
+            }
+
+        }
+
+        walk(v.second, scene);
     }
-
-    BOOST_FOREACH(pt::ptree::value_type &v, tree.get_child(""))
-                {
-
-                    auto node_type = v.first;
-                    if(node_type !=""){
-                        if(node_type == "level"){
-
-                            auto level_name = getAttributeAsTranslatedString("name", v);
-                            scene.setName(level_name);
-                        }
-                        if(node_type == "background"){
-
-                            auto background = getValue(v);
-                            scene.addBackground(background);
-                        }
-                        if(node_type == "starting-position"){
-
-                            auto x = getAttribute<int>("pos_x", v);
-                            auto y = getAttribute<int>("pos_y", v);
-
-                            player.setPosX(x);
-                            player.setPosY(y);
-                        }
-                        if(node_type == "collider"){
-                            Object& lastInsertedObject = scene.getLastInsertedObject();
-                        }
-
-                        if(node_type == "object"){
-
-                            auto obj_name = getAttributeAsTranslatedString("name", v);
-                            auto sprite = getAttributeAsTranslatedString("sprite", v);
-                            auto pos_y = getAttribute<int>("pos_y", v);
-                            auto pos_x = getAttribute<int>("pos_x", v);
-
-                            //optional
-                            auto frames = getAttributeWithDefaultValue("frames", v, 1);
-                            auto ms = getAttributeWithDefaultValue("ms", v, 0);
-                            auto y_limit = getAttributeWithDefaultValue("y_limit", v, -5000);
-
-                            Object obj(obj_name, pos_x, pos_y, sprite, frames, ms, y_limit);
-                            scene.addObject(obj);
-                        }
-                    }
-
-                    walk(v.second, new_key + node_type, scene);
-                }
 }
 
 std::string LevelLoader::getAttributeAsTranslatedString(std::string attribute, pt::ptree::value_type &v) {
@@ -118,7 +125,7 @@ std::string LevelLoader::getAttributeAsTranslatedString(std::string attribute, p
     return provideAndTranslate(attr);
 }
 
-std::string LevelLoader::getValue(pt::ptree::value_type &v) {
+std::string LevelLoader::getNodeValue(pt::ptree::value_type &v) {
     return provideAndTranslate(v.second.data());
 }
 
@@ -138,10 +145,4 @@ std::string LevelLoader::provideAndTranslate(std::string value) {
     }
 
     return value;
-}
-
-LevelLoader::LevelLoader(TranslationReader& translation_reader,
-                         TxtConfReader& configuration_reader,
-                         Object& player)
-        : translation_reader(translation_reader), configuration_reader(configuration_reader), player(player) {
 }

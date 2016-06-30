@@ -1,6 +1,6 @@
 <action internal-name="go-to" ui-name="#--action_goto" >
     <!-- pas de default-say, ça fait juste bouger le joueur -->
-    <need-proximity/>
+    <move-to-mouse-pointer/>
 </action>
 <action internal-name="see" ui-name="#--action_see" default-say="#--cant_look"/>
 <action internal-name="talk" ui-name="#--action_talk" default-say="#--cant_talk">

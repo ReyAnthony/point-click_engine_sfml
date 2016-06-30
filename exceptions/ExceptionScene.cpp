@@ -5,7 +5,7 @@
 #include "ExceptionScene.hpp"
 #include "../Application.hpp"
 
-ExceptionScene::ExceptionScene(std::string default_font_path, Exception& exception) : Scene() {
+ExceptionScene::ExceptionScene(std::string default_font_path, Exception& exception) {
 
     font.loadFromFile(default_font_path);
 
@@ -16,7 +16,7 @@ ExceptionScene::ExceptionScene(std::string default_font_path, Exception& excepti
     text.setFont(font);
 }
 
-ExceptionScene::ExceptionScene(const ExceptionScene& ref) : Scene(ref) {
+ExceptionScene::ExceptionScene(const ExceptionScene& ref)  {
     text.setString(ref.text.getString());
     text.setCharacterSize(ref.text.getCharacterSize());
     text.setPosition(ref.text.getPosition());
@@ -27,8 +27,6 @@ ExceptionScene::ExceptionScene(const ExceptionScene& ref) : Scene(ref) {
 }
 
 ExceptionScene &ExceptionScene::operator=(const ExceptionScene& ref) {
-
-    Scene::operator=(ref);
 
     text.setString(ref.text.getString());
     text.setCharacterSize(ref.text.getCharacterSize());
