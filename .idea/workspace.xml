@@ -12,24 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e0128ef-8c59-4545-b575-9814945f9ee7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application.cpp" afterPath="$PROJECT_DIR$/Application.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/config/default.conf_txt" afterPath="$PROJECT_DIR$/data/config/default.conf_txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/levels/level1.conf_xml" afterPath="$PROJECT_DIR$/data/levels/level1.conf_xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/EventDispatcher.hpp" afterPath="$PROJECT_DIR$/events/EventDispatcher.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/Observable.hpp" afterPath="$PROJECT_DIR$/events/Observable.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/Observer.hpp" afterPath="$PROJECT_DIR$/events/Observer.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/exceptions/ExceptionScene.cpp" afterPath="$PROJECT_DIR$/exceptions/ExceptionScene.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/exceptions/ExceptionScene.hpp" afterPath="$PROJECT_DIR$/exceptions/ExceptionScene.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/AbstractScene.hpp" afterPath="$PROJECT_DIR$/game/AbstractScene.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/GameScene.cpp" afterPath="$PROJECT_DIR$/game/GameScene.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/GameScene.hpp" afterPath="$PROJECT_DIR$/game/GameScene.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/Object.cpp" afterPath="$PROJECT_DIR$/game/Object.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/Object.hpp" afterPath="$PROJECT_DIR$/game/Object.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/Player.cpp" afterPath="$PROJECT_DIR$/game/Player.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/Player.hpp" afterPath="$PROJECT_DIR$/game/Player.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/levels/LevelLoader.cpp" afterPath="$PROJECT_DIR$/levels/LevelLoader.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/levels/LevelLoader.hpp" afterPath="$PROJECT_DIR$/levels/LevelLoader.hpp" />
     </list>
     <ignored path="sfml-test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,8 +37,28 @@
       <file leaf-file-name="Application.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52244896">
-              <caret line="37" column="12" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.55714285">
+              <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Player.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/Player.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="83" selection-start-line="22" selection-start-column="83" selection-end-line="22" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Player.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/Player.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="68" selection-start-line="6" selection-start-column="68" selection-end-line="6" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -107,7 +111,6 @@
         <option value="$PROJECT_DIR$/data/levels/level1.conf_xml" />
         <option value="$PROJECT_DIR$/data/config/default.conf_txt" />
         <option value="$PROJECT_DIR$/events/Observer.hpp" />
-        <option value="$PROJECT_DIR$/game/Player.hpp" />
         <option value="$PROJECT_DIR$/game/Player.cpp" />
         <option value="$PROJECT_DIR$/game/Object.hpp" />
         <option value="$PROJECT_DIR$/game/Object.cpp" />
@@ -118,6 +121,7 @@
         <option value="$PROJECT_DIR$/game/GameScene.hpp" />
         <option value="$PROJECT_DIR$/levels/LevelLoader.cpp" />
         <option value="$PROJECT_DIR$/events/Observable.hpp" />
+        <option value="$PROJECT_DIR$/game/Player.hpp" />
         <option value="$PROJECT_DIR$/Application.cpp" />
       </list>
     </option>
@@ -833,15 +837,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/Player.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79591835">
-          <caret line="28" column="2" selection-start-line="28" selection-start-column="2" selection-end-line="28" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="83" selection-start-line="22" selection-start-column="83" selection-end-line="22" selection-end-column="83" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/Player.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18367347">
+        <state vertical-scroll-proportion="0.0">
           <caret line="6" column="68" selection-start-line="6" selection-start-column="68" selection-end-line="6" selection-end-column="68" />
           <folding />
         </state>
@@ -849,8 +853,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52244896">
-          <caret line="37" column="12" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.55714285">
+          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
           <folding />
         </state>
       </provider>

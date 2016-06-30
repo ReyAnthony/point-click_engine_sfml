@@ -19,9 +19,8 @@ public:
            int pos_y,
            std::string texture_file,
            int frames = 1,
-           int ms_beetwen_frames = 0,
-           int y_limit = -5000)
-            : Object(name, pos_x, pos_y, texture_file, frames, ms_beetwen_frames, y_limit)
+           int ms_beetwen_frames = 0)
+            : Object(name, pos_x, pos_y, texture_file, frames, ms_beetwen_frames, 0)
     {
 
     }

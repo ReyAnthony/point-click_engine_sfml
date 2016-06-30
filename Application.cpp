@@ -28,14 +28,12 @@ void Application::start() {
                                       0,
                                       conf.getPlayerSpritePath(),
                                       conf.getPlayerFrames(),
-                                      conf.getPlayerMsBeetwenEachFrames(),
-                                      0 /*ignored for the player*/);
-
-
+                                      conf.getPlayerMsBeetwenEachFrames());
+        
         LevelLoader level_loader(*trad, conf, *player_character, eventDispatcher);
 
         try{
-            
+
             auto starting_level_file = conf.getStartingLevel();
             this->current_scene = level_loader.generateDataFromLevelFile(starting_level_file);
             eventDispatcher.registerObserver(*player_character);
