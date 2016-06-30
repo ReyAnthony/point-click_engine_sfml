@@ -6,8 +6,9 @@
 #define SFML_TEST_ABSTRACTSCENE_HPP
 
 #include <SFML/Graphics.hpp>
+#include "../events/Observer.hpp"
 
-class AbstractScene : public sf::Drawable {
+class AbstractScene : public sf::Drawable, public Observer<sf::Event> {
 
 public:
     virtual void update(sf::Time& deltaTime,  sf::RenderWindow& window) = 0;

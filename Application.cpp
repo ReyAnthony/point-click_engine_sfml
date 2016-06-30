@@ -21,6 +21,7 @@ void Application::start() {
     try {
 
         conf.loadConfiguration();
+        trad = getTranslator(conf);
 
         player_character = new Player(conf.getPlayerName(),
                                       0,
@@ -30,14 +31,15 @@ void Application::start() {
                                       conf.getPlayerMsBeetwenEachFrames(),
                                       0 /*ignored for the player*/);
 
-        eventDispatcher.registerObserver(*player_character);
 
-        trad = getTranslator(conf);
-        auto starting_level_file = conf.getStartingLevel();
         LevelLoader level_loader(*trad, conf, *player_character, eventDispatcher);
 
         try{
+            
+            auto starting_level_file = conf.getStartingLevel();
             this->current_scene = level_loader.generateDataFromLevelFile(starting_level_file);
+            eventDispatcher.registerObserver(*player_character);
+            eventDispatcher.registerObserver(*current_scene);
         }
         catch(boost::exception &e){
             throw Exception(boost::diagnostic_information(e));
@@ -85,7 +87,7 @@ void Application::gameLoop() {
         while (window->pollEvent(event))
         {
             if(event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed)
-                eventDispatcher.notifyObservers(event);
+                eventDispatcher.notifyObservers(event, *window);
 
             if (event.type == sf::Event::Closed)
             {

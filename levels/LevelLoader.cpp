@@ -8,7 +8,7 @@ LevelLoader::LevelLoader(TranslationReader& translation_reader,
                          TxtConfReader& configuration_reader,
                          Object& player, EventDispatcher& event_dispatcher)
         : translation_reader(translation_reader), configuration_reader(configuration_reader),
-          player(player) {
+          player(player), event_dispatcher(event_dispatcher) {
 }
 
 GameScene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
@@ -104,9 +104,8 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 auto ms = getAttributeWithDefaultValue<int>("ms", v, 0);
                 auto y_limit = getAttributeWithDefaultValue<int>("y_limit", v, -5000);
 
-                Object obj(obj_name, pos_x, pos_y, sprite, frames, ms, y_limit);
-                scene.addObject(obj);
-
+                Object* obj = new Object (obj_name, pos_x, pos_y, sprite, frames, ms, y_limit);
+                scene.addObject(*obj);
             }
 
             if(node_type == "collider"){

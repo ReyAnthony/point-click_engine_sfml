@@ -18,6 +18,8 @@ public:
     ExceptionScene & operator=(const ExceptionScene& ref);
 
     void update(sf::Time& deltaTime, sf::RenderWindow& window);
+    virtual void notify(sf::Event &event, sf::RenderTarget &renderTarget);
+
 
 private:
 

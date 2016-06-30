@@ -43,13 +43,13 @@ void GameScene::addPlayer(Object& player) {
 
 void GameScene::addObject(Object& object) {
 
-    objects.push_back(object);
+    objects.push_back(&object);
 
     //we sort the objects so that they in their priority order
     std::sort(objects.begin(), objects.end(),
-              [this](Object& a, Object& b) {
-                  auto tested = (a.getPosY() + a.getYLimit());
-                  auto other = (b.getPosY() + b.getYLimit());
+              [this](Object* a, Object* b) {
+                  auto tested = (a->getPosY() + a->getYLimit());
+                  auto other = (b->getPosY() + b->getYLimit());
 
                   return tested < other;
               });
@@ -64,8 +64,8 @@ void GameScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
 
     drawing_list.clear();
 
-    for(Object& obj : objects){
-        obj.update(deltaTime);
+    for(Object* obj : objects){
+        obj->update(deltaTime);
     }
 
     updateDrawingPriorities();
@@ -92,9 +92,9 @@ void GameScene::updateDrawingPriorities() {
     for(auto it = objects.begin(); it != objects.end(); ++it, ++current_index)
     {
         auto player_pos = (player.getPosY()+ player.getHeight());
-        auto other = (it->getPosY() + it->getYLimit());
+        auto other = ((*it)->getPosY() + (*it)->getYLimit());
 
-        drawing_list.push_back(&(*it));
+        drawing_list.push_back(*it);
         if(player_pos > other){
             index_insert_player = current_index + 1;
         }
@@ -105,5 +105,5 @@ void GameScene::updateDrawingPriorities() {
 }
 
 Object &GameScene::getLastInsertedObject() {
-    return *objects.end();
+    return **objects.end();
 }

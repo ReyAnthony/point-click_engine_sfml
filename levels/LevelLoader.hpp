@@ -60,6 +60,8 @@ private:
 
     std::string provideAndTranslate(std::string value);
 
+    EventDispatcher& event_dispatcher;
+
     TranslationReader& translation_reader;
     TxtConfReader& configuration_reader;
     Object& player;

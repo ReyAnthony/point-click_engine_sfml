@@ -141,13 +141,19 @@ int Object::getWidth() {
     return texture.getSize().x;
 }
 
-void Object::notify(sf::Event& event) {
+void Object::notify(sf::Event& event, sf::RenderTarget& renderTarget) {
     if(event.type == sf::Event::MouseButtonPressed){
+
+        //FIXME TAKE INTO ACCOUNT GLOBAL BOUNDS
 
         auto x = event.mouseButton.x;
         auto y = event.mouseButton.y;
 
-        if(sprite.getGlobalBounds().contains(x, y)){
+        sf::Vector2i absolute_position (x, y);
+        auto relative_position = renderTarget.mapPixelToCoords(absolute_position);
+
+        if(sprite.getGlobalBounds().contains(relative_position)){
+
             std::cout << name << " clicked" << std::endl;
         }
     }

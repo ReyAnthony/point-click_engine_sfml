@@ -31,7 +31,7 @@ public:
     int getHeight();
     int getWidth();
 
-    virtual void notify(sf::Event& event);
+    virtual void notify(sf::Event& event, sf::RenderTarget& renderTarget);
 
 private:
 

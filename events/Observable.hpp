@@ -22,8 +22,12 @@ public:
         //observers.remove(observer);
     }
 
+    void removeAllObservers(){
+        observers.empty();
+    }
+
 protected:
-    virtual void notifyObservers(T& type) =0;
+    virtual void notifyObservers(T& type,  sf::RenderTarget&renderTarget) =0;
 
 protected:
     std::list<Observer<T>*> observers;

@@ -50,3 +50,7 @@ void ExceptionScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
     camera.setCenter(Application::WIDTH / 2, Application::HEIGHT / 2);
     window.setView(camera);
 }
+
+void ExceptionScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
+    //no op
+}

@@ -26,16 +26,24 @@ public:
 
     Object& getPlayer();
 
-    void virtual update(sf::Time& deltaTime,  sf::RenderWindow& window);
+    void virtual update(sf::Time& deltaTime,  sf::RenderWindow& window) override;
+
+    virtual void notify(sf::Event &event, sf::RenderTarget &renderTarget) override {
+        //backward because we treat those in front first
+        for(auto it = objects.rbegin(); it != objects.rend(); ++it ){
+            (*it)->notify(event, renderTarget);
+        }
+    }
+
 
 private:
 
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates) const;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates) const override;
     void updateDrawingPriorities();
 
     std::string level_name;
-    std::vector<Object> objects;
-    std::vector<Object*> drawing_list;
+    std::vector<Object*> objects;
+    std::vector<const Object*> drawing_list;
 
     Object background;
     Object& player;
