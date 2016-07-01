@@ -36,7 +36,6 @@ void Application::start() {
 
             auto starting_level_file = conf.getStartingLevel();
             this->current_scene = level_loader.generateDataFromLevelFile(starting_level_file);
-            eventDispatcher.registerObserver(*player_character);
             eventDispatcher.registerObserver(*current_scene);
         }
         catch(boost::exception &e){

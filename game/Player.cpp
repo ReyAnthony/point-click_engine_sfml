@@ -4,7 +4,7 @@
 
 #include "Player.hpp"
 
-void Player::notify(sf::Event& event, sf::RenderTarget& renderTarget) {
+Action Player::doAction(sf::Event& event, sf::RenderTarget& renderTarget) {
 
     if(event.type == event.KeyPressed) {
 

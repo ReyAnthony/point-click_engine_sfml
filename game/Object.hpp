@@ -10,9 +10,9 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
-#include "../events/Observer.hpp"
+#include "../actions/Action.hpp"
 
-class Object : public sf::Drawable, public Observer<sf::Event> {
+class Object : public sf::Drawable {
 
 public:
 
@@ -30,8 +30,9 @@ public:
     int getYLimit();
     int getHeight();
     int getWidth();
+    std::string getName();
 
-    virtual void notify(sf::Event& event, sf::RenderTarget& renderTarget);
+    virtual Action doAction(sf::Event& event, sf::RenderTarget& renderTarget);
 
 private:
 

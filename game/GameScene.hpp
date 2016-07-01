@@ -27,13 +27,7 @@ public:
     Object& getPlayer();
 
     void virtual update(sf::Time& deltaTime,  sf::RenderWindow& window) override;
-
-    virtual void notify(sf::Event &event, sf::RenderTarget &renderTarget) override {
-        //backward because we treat those in front first
-        for(auto it = objects.rbegin(); it != objects.rend(); ++it ){
-            (*it)->notify(event, renderTarget);
-        }
-    }
+    virtual void notify(sf::Event &event, sf::RenderTarget &renderTarget) override;
 
 
 private:

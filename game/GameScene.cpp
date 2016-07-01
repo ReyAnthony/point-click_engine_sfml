@@ -14,6 +14,8 @@ GameScene::GameScene(const GameScene & ref) : player(ref.player){
 
     objects = ref.objects;
     level_name = ref.level_name;
+
+    //no need to copy the drawing list
 }
 
 GameScene &GameScene::operator=(const GameScene & ref) {
@@ -106,4 +108,25 @@ void GameScene::updateDrawingPriorities() {
 
 Object &GameScene::getLastInsertedObject() {
     return **objects.end();
+}
+
+void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
+    //backward because we treat those in front first
+    for(auto it = objects.rbegin(); it != objects.rend(); ++it ){
+        Action action = (*it)->doAction(event, renderTarget);
+
+        //Put the action in an action list, then execute it on next update ?
+        //We should not put 2 actions in the list
+        auto actionType = action.getActionType();
+        if(actionType == Action::NOOP){
+            std::cout << "NOOP" << " " <<  (*it)->getName() << std::endl;
+        }
+        else if(actionType == Action::TALK){
+            //if that's not a NOOP, we don't even bother forwarding events to other entities
+            std::cout << "TALK" << " " <<  (*it)->getName() << std::endl;
+            break;
+        }
+    }
+
+    player.doAction(event, renderTarget);
 }

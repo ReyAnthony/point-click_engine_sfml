@@ -4,6 +4,7 @@
 
 #include "Object.hpp"
 #include "../exceptions/Exception.hpp"
+#include "../actions/Action.hpp"
 
 Object::Object() {
 
@@ -141,10 +142,9 @@ int Object::getWidth() {
     return texture.getSize().x;
 }
 
-void Object::notify(sf::Event& event, sf::RenderTarget& renderTarget) {
-    if(event.type == sf::Event::MouseButtonPressed){
+Action Object::doAction(sf::Event& event, sf::RenderTarget& renderTarget) {
 
-        //FIXME TAKE INTO ACCOUNT GLOBAL BOUNDS
+    if(event.type == sf::Event::MouseButtonPressed){
 
         auto x = event.mouseButton.x;
         auto y = event.mouseButton.y;
@@ -155,6 +155,16 @@ void Object::notify(sf::Event& event, sf::RenderTarget& renderTarget) {
         if(sprite.getGlobalBounds().contains(relative_position)){
 
             std::cout << name << " clicked" << std::endl;
+            Action a(Action::TALK);
+            return a;
+
         }
     }
+
+    Action a(Action::NOOP);
+    return a;
+}
+
+std::string Object::getName() {
+    return this->name;
 }

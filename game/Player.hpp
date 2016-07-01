@@ -25,7 +25,7 @@ public:
 
     }
 
-    virtual void notify(sf::Event& event, sf::RenderTarget& renderTarget) override;
+    virtual Action doAction(sf::Event& event, sf::RenderTarget& renderTarget) override;
 
 };
 
