@@ -6,9 +6,9 @@
 
 LevelLoader::LevelLoader(TranslationReader& translation_reader,
                          TxtConfReader& configuration_reader,
-                         Object& player, EventDispatcher& event_dispatcher)
+                         Object& player, EventDispatcher& event_dispatcher, ActionPanel& action_panel)
         : translation_reader(translation_reader), configuration_reader(configuration_reader),
-          player(player), event_dispatcher(event_dispatcher) {
+          player(player), event_dispatcher(event_dispatcher), action_panel(action_panel) {
 }
 
 GameScene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
@@ -37,7 +37,7 @@ GameScene *LevelLoader::generateScene(pt::ptree& tree, std::list<std::string> in
 
     providen_values = generateIncludeData(include_files);
 
-    GameScene * scene = new GameScene(player);
+    GameScene * scene = new GameScene(player, action_panel);
     walk(tree, *scene);
     return scene;
 }
@@ -81,7 +81,7 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
             if(node_type == "background"){
 
                 auto background = getNodeValue(v);
-                scene.addBackground(background);
+                scene.setBackground(background);
             }
             if(node_type == "starting-position"){
 

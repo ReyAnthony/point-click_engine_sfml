@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <boost/exception/diagnostic_information.hpp>
 #include "../exceptions/Exception.hpp"
+#include "../events/GUIActionType.hpp"
 
 
 namespace pt = boost::property_tree;
@@ -37,8 +38,11 @@ public:
     std::string getPlayerSpritePath();
     int getPlayerMsBeetwenEachFrames();
     int getPlayerFrames();
+    std::string getButtonPath(GUIActionsType actionType);
 
 private:
+
+    std::string generatedFullButtonFilePath(std::string filename);
 
     //TRANSLATIONS section
     const std::string ESCAPE_CHAR = "translations.translation-escape-char";
@@ -77,6 +81,14 @@ private:
                                     SPRITE, NAME, FRAMES};
 
     std::map<std::string, std::string> config_values;
+
+    const std::string GOTO_BUTT = "GOTO_BUTT";
+    const std::string TALK_BUTT = "TALK_BUTT";
+    const std::string GRAB_BUTT = "GRAB_BUTT";
+    const std::string SEE_BUTT = "SEE_BUTT";
+    const std::string USE_BUTT = "USE_BUTT";
+
+    std::map<GUIActionsType , std::string> buttons_path;
 };
 
 

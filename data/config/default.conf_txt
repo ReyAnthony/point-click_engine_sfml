@@ -1,6 +1,6 @@
 [config]
 default-conf-type = conf_xml
-game-name = ! Monkey Island
+game-name = !(Monkey Island)
 framerate = 30
 
 [paths]
@@ -19,9 +19,6 @@ starting-level = level1
 
 [fonts]
 default-font = GlacialIndifference-Regular.otf
-
-[GUI]
-show-fps = true
 
 [player]
 ms = 120

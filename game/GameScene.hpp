@@ -9,26 +9,24 @@
 #include <list>
 #include "Object.hpp"
 #include "AbstractScene.hpp"
+#include "action_panel/ActionPanel.hpp"
 
 class GameScene : public AbstractScene {
 
 public:
 
-    GameScene(Object& player);
+    GameScene(Object& player, ActionPanel& actionPanel);
     GameScene(const GameScene & ref);
     GameScene & operator=(const GameScene & ref);
 
     void setName(std::string level_name);
-    void addBackground(std::string background_file);
-    void addPlayer(Object& player);
+    void setBackground(std::string background_file);
+
     void addObject(Object& object);
     Object & getLastInsertedObject();
 
-    Object& getPlayer();
-
     void virtual update(sf::Time& deltaTime,  sf::RenderWindow& window) override;
     virtual void notify(sf::Event &event, sf::RenderTarget &renderTarget) override;
-
 
 private:
 
@@ -41,6 +39,7 @@ private:
 
     Object background;
     Object& player;
+    ActionPanel&action_panel;
 };
 
 

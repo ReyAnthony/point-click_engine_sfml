@@ -29,7 +29,7 @@ public:
 
     LevelLoader(TranslationReader& translation_reader,
                 TxtConfReader& configuration_reader,
-                Object& player, EventDispatcher& event_dispatcher);
+                Object& player, EventDispatcher& event_dispatcher, ActionPanel& action_panel);
 
     GameScene * generateDataFromLevelFile(std::string levelFile);
 
@@ -62,6 +62,7 @@ private:
 
     EventDispatcher& event_dispatcher;
 
+    ActionPanel& action_panel;
     TranslationReader& translation_reader;
     TxtConfReader& configuration_reader;
     Object& player;

@@ -26,6 +26,13 @@ void TxtConfReader::loadConfiguration() {
     catch(boost::exception & e){
         throw Exception("No such key in " + CONFIG_FILE);
     }
+
+    buttons_path.insert(std::pair<GUIActionsType , std::string>(GOTO, generatedFullButtonFilePath(GOTO_BUTT)));
+    buttons_path.insert(std::pair<GUIActionsType , std::string>(GRAB, generatedFullButtonFilePath(GRAB_BUTT)));
+    buttons_path.insert(std::pair<GUIActionsType , std::string>(SEE, generatedFullButtonFilePath(SEE_BUTT)));
+    buttons_path.insert(std::pair<GUIActionsType , std::string>(USE, generatedFullButtonFilePath(USE_BUTT)));
+    buttons_path.insert(std::pair<GUIActionsType , std::string>(TALK, generatedFullButtonFilePath(TALK_BUTT)));
+
 }
 
 std::string TxtConfReader::getDefaultConfType() {
@@ -93,4 +100,13 @@ int TxtConfReader::getPlayerMsBeetwenEachFrames() {
 
 int TxtConfReader::getPlayerFrames() {
     return (unsigned int) std::stoul(config_values[FRAMES]);
+}
+
+std::string TxtConfReader::generatedFullButtonFilePath(std::string filename) {
+
+    return config_values[ACTIONS_DIR] + "/" +  filename + "_" + config_values[DEFAULT_LANG] + ".png";
+}
+
+std::string TxtConfReader::getButtonPath(GUIActionsType type) {
+    return buttons_path[type];
 }

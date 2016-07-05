@@ -13,6 +13,7 @@
 #include "exceptions/ExceptionScene.hpp"
 #include "events/EventDispatcher.hpp"
 #include "game/Player.hpp"
+#include "game/action_panel/ActionPanel.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -39,6 +40,8 @@ private:
     bool running = false;
 
     sf::RenderWindow* window;
+    sf::View game_view;
+    sf::View GUI_action_panel_view;
     sf::Clock clock;
 
     TxtConfReader conf;
@@ -47,6 +50,7 @@ private:
     EventDispatcher eventDispatcher;
 
     Player* player_character;
+    ActionPanel* action_panel;
 };
 
 TranslationReader *getTranslator(TxtConfReader& conf);

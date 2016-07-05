@@ -25,7 +25,7 @@ public:
 
     }
 
-    virtual Action doAction(sf::Event& event, sf::RenderTarget& renderTarget) override;
+    virtual AbstractAction doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) override;
 
 };
 

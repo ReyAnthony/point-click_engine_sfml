@@ -29,10 +29,12 @@ void Application::start() {
                                       conf.getPlayerSpritePath(),
                                       conf.getPlayerFrames(),
                                       conf.getPlayerMsBeetwenEachFrames());
-        
-        LevelLoader level_loader(*trad, conf, *player_character, eventDispatcher);
+
 
         try{
+
+            action_panel = new ActionPanel(conf);
+            LevelLoader level_loader(*trad, conf, *player_character, eventDispatcher, *action_panel);
 
             auto starting_level_file = conf.getStartingLevel();
             this->current_scene = level_loader.generateDataFromLevelFile(starting_level_file);
@@ -69,8 +71,10 @@ void Application::initRenderer() {
                                                 (unsigned int) Application::HEIGHT),
                                                 conf.getAppName());
     window->setFramerateLimit(conf.getFramerate());
-    sf::View camera;
-    camera.reset(sf::FloatRect(0, 0, Application::WIDTH, Application::HEIGHT));
+
+    game_view = window->getView();
+    GUI_action_panel_view.reset(sf::FloatRect(0, 0, Application::WIDTH, 53));
+    GUI_action_panel_view.setViewport(sf::FloatRect(0, 0, 1, 0.08));
 }
 
 void Application::gameLoop() {
@@ -94,8 +98,14 @@ void Application::gameLoop() {
         }
 
         window->clear(sf::Color::Black);
+        window->setView(game_view);
         current_scene->update(time_for_frame, *window);
         window->draw(*current_scene);
+
+
+        window->setView(GUI_action_panel_view);
+        //FIXME this should not be here ! cause it will bug if exc scene about it !
+        window->draw(*action_panel);
         window->display();
     }
 }

@@ -4,7 +4,9 @@
 
 #include "Object.hpp"
 #include "../exceptions/Exception.hpp"
-#include "../actions/Action.hpp"
+#include "actions/TalkAction.hpp"
+#include "actions/NoopAction.hpp"
+
 
 Object::Object() {
 
@@ -109,7 +111,9 @@ void Object::initTextureAndSprite(std::string texture_file) {
         this->sprite.setTexture(texture);
     }
     else
-       throw Exception("Failed to load the texture " + texture_file);
+    {
+        throw Exception("Failed to load the texture " + texture_file);
+    }
 
     if(animated){
 
@@ -122,49 +126,39 @@ void Object::initTextureAndSprite(std::string texture_file) {
     }
 }
 
-int Object::getPosY() {
+int Object::getPosY() const {
     return sprite.getPosition().y;
 }
 
-int Object::getPosX() {
+int Object::getPosX() const {
     return sprite.getPosition().x;
 }
 
-int Object::getYLimit() {
+int Object::getYLimit() const {
     return y_limit;
 }
 
-int Object::getHeight() {
+int Object::getHeight() const {
     return texture.getSize().y;
 }
 
-int Object::getWidth() {
+int Object::getWidth() const {
     return texture.getSize().x;
 }
 
-Action Object::doAction(sf::Event& event, sf::RenderTarget& renderTarget) {
+AbstractAction Object::doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) {
 
-    if(event.type == sf::Event::MouseButtonPressed){
+   if(isClicked(event, renderTarget)) {
 
-        auto x = event.mouseButton.x;
-        auto y = event.mouseButton.y;
+       std::cout << name << " clicked" << std::endl;
+       TalkAction talkAction;
+       return talkAction;
+   }
 
-        sf::Vector2i absolute_position (x, y);
-        auto relative_position = renderTarget.mapPixelToCoords(absolute_position);
-
-        if(sprite.getGlobalBounds().contains(relative_position)){
-
-            std::cout << name << " clicked" << std::endl;
-            Action a(Action::TALK);
-            return a;
-
-        }
-    }
-
-    Action a(Action::NOOP);
-    return a;
+    NoopAction noopAction;
+    return noopAction;
 }
 
-std::string Object::getName() {
+std::string Object::getName() const {
     return this->name;
 }

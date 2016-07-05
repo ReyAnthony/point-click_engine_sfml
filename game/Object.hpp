@@ -10,29 +10,49 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
-#include "../actions/Action.hpp"
+#include "../events/GUIActionType.hpp"
+#include "AbstractAction.hpp"
 
 class Object : public sf::Drawable {
 
 public:
 
     Object();
-    Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames = 1, int ms_beetwen_frames = 0,
-           int y_limit = -5000);
+    Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames = 1, int ms_beetwen_frames = 0, int y_limit = -5000);
     Object & operator=(const Object& ref);
     Object(const Object& ref);
 
     void update(sf::Time& deltaTime);
     void setPosX(int pos_x);
     void setPosY(int pos_y);
-    int getPosX();
-    int getPosY();
-    int getYLimit();
-    int getHeight();
-    int getWidth();
-    std::string getName();
+    int getPosX() const;
+    int getPosY() const;
+    int getYLimit() const;
+    int getHeight() const;
+    int getWidth() const;
+    std::string getName() const;
 
-    virtual Action doAction(sf::Event& event, sf::RenderTarget& renderTarget);
+    virtual AbstractAction doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType);
+
+protected:
+
+    bool isClicked(sf::Event& event, sf::RenderTarget& renderTarget){
+
+        if(event.type == sf::Event::MouseButtonPressed){
+
+            auto x = event.mouseButton.x;
+            auto y = event.mouseButton.y;
+
+            sf::Vector2i absolute_position(x, y);
+            auto relative_position = renderTarget.mapPixelToCoords(absolute_position);
+
+            if (sprite.getGlobalBounds().contains(relative_position)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 private:
 
