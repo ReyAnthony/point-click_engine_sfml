@@ -25,6 +25,8 @@ Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file,
 
     initTextureAndSprite(texture_file);
     sprite.setPosition(pos_x, pos_y);
+
+    actions.insert(std::pair<GUIActionsType , AbstractAction* >(NOOP, new NoopAction()));
 }
 
 Object &Object::operator=(const Object& ref) {
@@ -44,6 +46,8 @@ Object &Object::operator=(const Object& ref) {
 
     elapsed_time = ref.elapsed_time;
 
+    actions = ref.actions;
+
     return *this;
 }
 
@@ -61,6 +65,7 @@ Object::Object(const Object& ref) {
 
     y_limit = ref.y_limit;
 
+    actions = ref.actions;
 
     elapsed_time = ref.elapsed_time;
 
@@ -146,19 +151,40 @@ int Object::getWidth() const {
     return texture.getSize().x;
 }
 
-AbstractAction Object::doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) {
+AbstractAction& Object::doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) {
 
-   if(isClicked(event, renderTarget)) {
+    auto action = actions[actionType];
+
+   if(isClicked(event, renderTarget) && action != nullptr) {
 
        std::cout << name << " clicked" << std::endl;
-       TalkAction talkAction;
-       return talkAction;
+       return *action;
    }
 
-    NoopAction noopAction;
-    return noopAction;
+    return *actions[NOOP];
 }
 
 std::string Object::getName() const {
     return this->name;
+}
+
+bool Object::isClicked(sf::Event& event, sf::RenderTarget& renderTarget) {
+
+    if(event.type == sf::Event::MouseButtonPressed){
+
+        auto x = event.mouseButton.x;
+        auto y = event.mouseButton.y;
+
+        sf::Vector2i absolute_position(x, y);
+        auto relative_position = renderTarget.mapPixelToCoords(absolute_position);
+
+        if (sprite.getGlobalBounds().contains(relative_position)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Object::addAction(GUIActionsType key, AbstractAction* action) {
+    actions.insert(std::pair<GUIActionsType, AbstractAction*>(key, action));
 }

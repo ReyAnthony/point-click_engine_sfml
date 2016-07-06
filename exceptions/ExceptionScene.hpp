@@ -17,13 +17,13 @@ public:
     ExceptionScene(const ExceptionScene& ref);
     ExceptionScene & operator=(const ExceptionScene& ref);
 
-    void update(sf::Time& deltaTime, sf::RenderWindow& window);
-    virtual void notify(sf::Event &event, sf::RenderTarget &renderTarget);
+    void update(sf::Time& deltaTime, sf::RenderWindow& window) override ;
+    virtual void notify(sf::Event &event, sf::RenderTarget &renderTarget) override;
 
 
 private:
 
-    void draw(sf::RenderTarget& target, sf::RenderStates) const;
+    void draw(sf::RenderTarget& target, sf::RenderStates) const override;
 
     sf::Text text;
     sf::Font font;

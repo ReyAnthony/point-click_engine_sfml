@@ -6,9 +6,17 @@
 
 LevelLoader::LevelLoader(TranslationReader& translation_reader,
                          TxtConfReader& configuration_reader,
-                         Object& player, EventDispatcher& event_dispatcher, ActionPanel& action_panel)
-        : translation_reader(translation_reader), configuration_reader(configuration_reader),
-          player(player), event_dispatcher(event_dispatcher), action_panel(action_panel) {
+                         Object& player,
+                         EventDispatcher& event_dispatcher,
+                         ActionPanel& action_panel,
+                         SpeechPanel& speech_panel)
+        :
+          translation_reader(translation_reader),
+          configuration_reader(configuration_reader),
+          player(player),
+          event_dispatcher(event_dispatcher),
+          action_panel(action_panel),
+          speech_panel(speech_panel) {
 }
 
 GameScene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
@@ -24,7 +32,7 @@ GameScene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
         auto node_type = v.first;
         if(node_type != "" && node_type == "include")
         {
-            auto node_value = getNodeValue(v);
+            auto node_value = getNodeValueAsTranslatedString(v);
             auto include_file_with_path = configuration_reader.prependLevelPathAndAppendFileType(node_value);
             include_files.push_back(include_file_with_path);
         }
@@ -37,7 +45,7 @@ GameScene *LevelLoader::generateScene(pt::ptree& tree, std::list<std::string> in
 
     providen_values = generateIncludeData(include_files);
 
-    GameScene * scene = new GameScene(player, action_panel);
+    GameScene * scene = new GameScene(player, action_panel, speech_panel);
     walk(tree, *scene);
     return scene;
 }
@@ -56,7 +64,7 @@ std::map<std::string, std::string> LevelLoader::generateIncludeData(std::list<st
             auto node_type = v.first;
             if(node_type != "" && node_type == "provide"){
                 auto name = getAttribute<std::string>("name", v);
-                auto content = getNodeValue(v);
+                auto content = getNodeValueAsTranslatedString(v);
                 providen_values.insert(std::pair<std::string, std::string>(name, content));
             }
         }
@@ -69,20 +77,23 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
 
     for(pt::ptree::value_type &v : tree.get_child(""))
     {
-
+        //FIXME check if in the right place (AKA no background outside of object for example)
         auto node_type = v.first;
 
         if(node_type !=""){
+
             if(node_type == "level"){
 
                 auto level_name = getAttributeAsTranslatedString("name", v);
                 scene.setName(level_name);
             }
+
             if(node_type == "background"){
 
-                auto background = getNodeValue(v);
+                auto background = getNodeValueAsTranslatedString(v);
                 scene.setBackground(background);
             }
+
             if(node_type == "starting-position"){
 
                 auto x = getAttribute<int>("pos_x", v);
@@ -108,8 +119,34 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 scene.addObject(*obj);
             }
 
+            if(node_type == "talk" || node_type == "see"){
+
+                auto parent_node_type = node_type;
+                std::vector<std::string> sentences;
+
+                for(pt::ptree::value_type &v : v.second)
+                {
+                    node_type = v.first;
+                    if(node_type == "say")
+                        sentences.push_back(getNodeValueAsTranslatedString(v));
+                }
+
+                Object& last_inserted_object = scene.getLastInsertedObject();
+
+                if(parent_node_type == "see"){
+                    SeeAction* see_action = new SeeAction(sentences);
+                    last_inserted_object.addAction(SEE, see_action);
+                }
+                else {
+                    TalkAction* talk_action = new TalkAction(sentences);
+                    last_inserted_object.addAction(TALK, talk_action);
+                }
+
+            }
+
+            //TODO colliders
             if(node_type == "collider"){
-                Object& lastInsertedObject = scene.getLastInsertedObject();
+                Object&last_inserted_object = scene.getLastInsertedObject();
             }
 
         }
@@ -124,7 +161,7 @@ std::string LevelLoader::getAttributeAsTranslatedString(std::string attribute, p
     return provideAndTranslate(attr);
 }
 
-std::string LevelLoader::getNodeValue(pt::ptree::value_type &v) {
+std::string LevelLoader::getNodeValueAsTranslatedString(pt::ptree::value_type &v) {
     return provideAndTranslate(v.second.data());
 }
 

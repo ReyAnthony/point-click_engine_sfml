@@ -2,15 +2,20 @@
 <include>character_names</include>
 
 <level name="providen_level_1_name">
-    <music> providen_music_truc </music>
+    <!-- <music> providen_music_truc </music> -->
     <background> providen_background_level </background>
     <starting-position pos_x="700" pos_y="350"/>
 
     <!-- dynamic objetcs -->
     <object name="providen_suspended_pirate_name" sprite="providen_sprite_pirate3" pos_x="655" pos_y="110" frames="6" y_limit="500" ms="240">
         <see>
-            <say> #--what-does-he-say </say>
+            <say> This is the suspended pirate ! </say>
         </see>
+        <talk>
+            <say> YAAR ! </say>
+            <say> JAVHOL ! </say>
+            <say> DA IST EIN GUT HERR ! </say>
+        </talk>
     </object>
 
     <!-- static objects -->

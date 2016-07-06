@@ -39,9 +39,11 @@
       <sourceFolder url="file://$MODULE_DIR$/game/actions/SeeAction.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/GameScene.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/AbstractScene.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/game/AbstractScene.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Object.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/GameScene.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/game/AbstractScene.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/game/speech_panel/SpeechPanel.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/game/speech_panel/SpeechPanel.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/AbstractAction.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Object.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Player.cpp" isTestSource="false" />

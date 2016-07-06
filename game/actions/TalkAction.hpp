@@ -21,13 +21,11 @@ public:
     }
 
     TalkAction(std::vector<std::string> sentences) : sentences(sentences) {
-
         this->setActionType(TALK);
     }
 
     TalkAction(){
         this->setActionType(TALK);
-
     }
 };
 

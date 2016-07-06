@@ -30,7 +30,7 @@ public:
     std::string getDefaultTranslationFile();
     std::string getStartingLevel();
     unsigned int getFramerate();
-    std::string getDefaultFont();
+    std::string getDefaultFontPath();
     std::string prependLevelPathAndAppendFileType(std::string name);
     std::string getAppName();
     std::string getTranslationEscapeChar();

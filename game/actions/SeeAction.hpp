@@ -7,9 +7,18 @@
 
 
 #include "../AbstractAction.hpp"
+#include "TalkAction.hpp"
 
-class SeeAction : public AbstractAction {
+class SeeAction : public TalkAction {
 
+public:
+    SeeAction(std::vector<std::string> sentences) : TalkAction(sentences) {
+        this->setActionType(SEE);
+    }
+
+    SeeAction() {
+        this->setActionType(SEE);
+    }
 };
 
 

@@ -19,9 +19,9 @@ public:
 
 
     //TODO c'est sale revoir l'archi (genre object aurait une interface un actionable object pour les objets utilisables, hors bouttons)
-    AbstractAction doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) override{
+    AbstractAction& doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) override{
 
-        throw Exception("doAction is not implemented for ActionPanel");
+        throw Exception("doAction is not implemented for Buttons");
     }
 
     GUIActionsType doAction(sf::Event& event, sf::RenderTarget& renderTarget){

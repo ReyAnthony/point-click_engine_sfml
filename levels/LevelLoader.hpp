@@ -20,6 +20,8 @@
 #include "../conf/ConfReader.hpp"
 #include "../game/Object.hpp"
 #include "../events/EventDispatcher.hpp"
+#include "../game/actions/TalkAction.hpp"
+#include "../game/actions/SeeAction.hpp"
 
 namespace pt = boost::property_tree;
 
@@ -29,7 +31,9 @@ public:
 
     LevelLoader(TranslationReader& translation_reader,
                 TxtConfReader& configuration_reader,
-                Object& player, EventDispatcher& event_dispatcher, ActionPanel& action_panel);
+                Object& player, EventDispatcher& event_dispatcher,
+                ActionPanel& action_panel,
+                SpeechPanel& speech_panel);
 
     GameScene * generateDataFromLevelFile(std::string levelFile);
 
@@ -50,7 +54,7 @@ private:
     }
 
     std::string getAttributeAsTranslatedString(std::string attribute, pt::ptree::value_type &v);
-    std::string getNodeValue(pt::ptree::value_type &v);
+    std::string getNodeValueAsTranslatedString(pt::ptree::value_type &v);
 
 
 
@@ -66,6 +70,7 @@ private:
     TranslationReader& translation_reader;
     TxtConfReader& configuration_reader;
     Object& player;
+    SpeechPanel& speech_panel;
     std::string translation_escape_char = configuration_reader.getTranslationEscapeChar();
 
     std::map<std::string, std::string> providen_values;

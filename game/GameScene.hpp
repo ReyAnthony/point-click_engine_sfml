@@ -10,12 +10,15 @@
 #include "Object.hpp"
 #include "AbstractScene.hpp"
 #include "action_panel/ActionPanel.hpp"
+#include "actions/TalkAction.hpp"
+#include "actions/SeeAction.hpp"
+#include "speech_panel/SpeechPanel.hpp"
 
 class GameScene : public AbstractScene {
 
 public:
 
-    GameScene(Object& player, ActionPanel& actionPanel);
+    GameScene(Object& player, ActionPanel& actionPanel, SpeechPanel& speech_panel);
     GameScene(const GameScene & ref);
     GameScene & operator=(const GameScene & ref);
 
@@ -39,7 +42,9 @@ private:
 
     Object background;
     Object& player;
-    ActionPanel&action_panel;
+    ActionPanel& action_panel;
+    SpeechPanel& speech_panel;
+    GUIActionsType current_action = NOOP;
 };
 
 

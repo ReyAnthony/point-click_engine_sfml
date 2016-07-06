@@ -21,6 +21,11 @@ public:
     Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames = 1, int ms_beetwen_frames = 0, int y_limit = -5000);
     Object & operator=(const Object& ref);
     Object(const Object& ref);
+    ~Object(){
+        for(auto action : actions){
+            delete action.second;
+        }
+    }
 
     void update(sf::Time& deltaTime);
     void setPosX(int pos_x);
@@ -31,28 +36,13 @@ public:
     int getHeight() const;
     int getWidth() const;
     std::string getName() const;
+    void addAction(GUIActionsType key, AbstractAction* action);
 
-    virtual AbstractAction doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType);
+    virtual AbstractAction& doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType);
 
 protected:
 
-    bool isClicked(sf::Event& event, sf::RenderTarget& renderTarget){
-
-        if(event.type == sf::Event::MouseButtonPressed){
-
-            auto x = event.mouseButton.x;
-            auto y = event.mouseButton.y;
-
-            sf::Vector2i absolute_position(x, y);
-            auto relative_position = renderTarget.mapPixelToCoords(absolute_position);
-
-            if (sprite.getGlobalBounds().contains(relative_position)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    bool isClicked(sf::Event& event, sf::RenderTarget& renderTarget);
 
 private:
 
@@ -70,6 +60,8 @@ private:
     int y_limit = -5000;
 
     bool animated = false;
+
+    std::map<GUIActionsType, AbstractAction*> actions;
 };
 
 

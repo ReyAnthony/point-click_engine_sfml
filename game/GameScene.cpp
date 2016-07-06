@@ -5,11 +5,15 @@
 #include "GameScene.hpp"
 #include "../Application.hpp"
 
-GameScene::GameScene(Object& player, ActionPanel& actionPanel) : player(player), action_panel(actionPanel){
 
+
+GameScene::GameScene(Object& player, ActionPanel& actionPanel, SpeechPanel& speech_panel) :
+        player(player),
+        action_panel(actionPanel),
+        speech_panel(speech_panel){
 }
 
-GameScene::GameScene(const GameScene & ref) : player(ref.player),  action_panel(action_panel){
+GameScene::GameScene(const GameScene & ref) : player(ref.player),  action_panel(ref.action_panel), speech_panel(ref.speech_panel){
     background = ref.background;
 
     objects = ref.objects;
@@ -24,6 +28,7 @@ GameScene &GameScene::operator=(const GameScene & ref) {
     level_name = ref.level_name;
     player = ref.player;
     action_panel = ref.action_panel;
+    speech_panel = ref.speech_panel;
 
     return *this;
 }
@@ -43,7 +48,6 @@ void GameScene::addObject(Object& object) {
     objects.push_back(&object);
 
     //we sort the objects so that they are in their priority order
-    //TODO add function "prioritize ?"
     std::sort(objects.begin(), objects.end(),
               [this](Object* a, Object* b) {
                   auto tested = (a->getPosY() + a->getYLimit());
@@ -99,31 +103,46 @@ void GameScene::updateDrawingPriorities() {
 }
 
 Object &GameScene::getLastInsertedObject() {
-    return **objects.end();
+    return **(objects.end() - 1);
 }
 
 void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
 
-    auto current_action = TALK;
-
-    action_panel.doAction(event, renderTarget);
+    current_action = action_panel.doAction(event, renderTarget);
 
     //backward because we treat those in front first
     for(auto it = objects.rbegin(); it != objects.rend(); ++it ){
-        AbstractAction action = (*it)->doAction(event, renderTarget, current_action);
 
         //Put the action in an action list, then execute it on next update ?
         //We should not put 2 actions in the list
+        AbstractAction& action = (*it)->doAction(event, renderTarget, current_action);
         auto actionType = action.getActionType();
 
-        if(actionType == NOOP){
-            std::cout << "NOOP" << " " <<  (*it)->getName() << std::endl;
+        if(actionType == TALK && action.getActionType() == TALK){
+
+            TalkAction& talk = (TalkAction&) action;
+            auto sentences = talk.getSentences();
+            speech_panel.setSentences(sentences);
         }
-        else if(actionType == TALK){
-            //if that's not a NOOP, we don't even bother forwarding events to other entities
-            std::cout << "TALK" << " " <<  (*it)->getName() << std::endl;
+        else if (actionType == SEE  && action.getActionType() == SEE){
+
+            SeeAction& see = (SeeAction&) action;
+            auto sentences = see.getSentences();
+            speech_panel.setSentences(sentences);
+
+        }
+        else if( actionType == GRAB ){
+            std::cout << "GRAB" << " " <<  (*it)->getName() << std::endl;
+        }
+        else if (actionType == USE){
+            std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
+        }
+        else if( actionType == GOTO){
+            std::cout << "GOTO" << " " <<  (*it)->getName() << std::endl;
+        }
+
+        if(actionType != NOOP)
             break;
-        }
     }
 
     player.doAction(event, renderTarget, current_action);

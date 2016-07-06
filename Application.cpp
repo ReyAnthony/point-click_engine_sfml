@@ -15,6 +15,14 @@ Application::~Application() {
 
     if(current_scene != nullptr)
         delete current_scene;
+
+    if(speech_panel != nullptr)
+        delete speech_panel;
+
+    if(action_panel != nullptr)
+        delete action_panel;
+
+
 }
 
 void Application::start() {
@@ -30,22 +38,29 @@ void Application::start() {
                                       conf.getPlayerFrames(),
                                       conf.getPlayerMsBeetwenEachFrames());
 
-
         try{
 
+            speech_panel = new SpeechPanel(conf.getDefaultFontPath());
             action_panel = new ActionPanel(conf);
-            LevelLoader level_loader(*trad, conf, *player_character, eventDispatcher, *action_panel);
+            LevelLoader level_loader(*trad,
+                                     conf,
+                                     *player_character,
+                                     event_dispatcher,
+                                     *action_panel,
+                                     *speech_panel);
 
             auto starting_level_file = conf.getStartingLevel();
             this->current_scene = level_loader.generateDataFromLevelFile(starting_level_file);
-            eventDispatcher.registerObserver(*current_scene);
+            event_dispatcher.registerObserver(*current_scene);
         }
         catch(boost::exception &e){
             throw Exception(boost::diagnostic_information(e));
         }
     }
     catch(Exception &e ) {
-        this->current_scene =  new ExceptionScene(conf.getDefaultFont(), e);
+
+        has_exception = true;
+        this->current_scene = new ExceptionScene(conf.getDefaultFontPath(), e);
     }
 
     try {
@@ -55,7 +70,6 @@ void Application::start() {
     catch(Exception &e){
 
         delete current_scene;
-        this->current_scene = new ExceptionScene(conf.getDefaultFont(), e);
     }
 }
 
@@ -88,12 +102,13 @@ void Application::gameLoop() {
         while (window->pollEvent(event))
         {
             if(event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed)
-                eventDispatcher.notifyObservers(event, *window);
+                event_dispatcher.notifyObservers(event, *window);
 
             if (event.type == sf::Event::Closed)
             {
                 window->close();
                 running = false;
+                break;
             }
         }
 
@@ -102,10 +117,12 @@ void Application::gameLoop() {
         current_scene->update(time_for_frame, *window);
         window->draw(*current_scene);
 
+        if(!has_exception){
+            window->setView(GUI_action_panel_view);
+            window->draw(*action_panel);
+            window->draw(*speech_panel);
+        }
 
-        window->setView(GUI_action_panel_view);
-        //FIXME this should not be here ! cause it will bug if exc scene about it !
-        window->draw(*action_panel);
         window->display();
     }
 }

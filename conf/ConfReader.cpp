@@ -62,7 +62,7 @@ unsigned int TxtConfReader::getFramerate() {
     return std::stoul(config_values[FRAME_RATE]);
 }
 
-std::string TxtConfReader::getDefaultFont() {
+std::string TxtConfReader::getDefaultFontPath() {
     auto fonts_dir = config_values[FONTS_DIR];
     auto default_font = config_values[DEFAULT_FONT];
 

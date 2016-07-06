@@ -4,7 +4,7 @@
 
 #include "Player.hpp"
 
-AbstractAction Player::doAction(sf::Event& event, sf::RenderTarget& renderTarget,GUIActionsType actionType) {
+AbstractAction& Player::doAction(sf::Event& event, sf::RenderTarget& renderTarget,GUIActionsType actionType) {
 
     if(event.type == event.KeyPressed) {
 

@@ -47,10 +47,13 @@ private:
     TxtConfReader conf;
     TranslationReader* trad;
 
-    EventDispatcher eventDispatcher;
+    EventDispatcher event_dispatcher;
 
     Player* player_character;
     ActionPanel* action_panel;
+    SpeechPanel* speech_panel;
+
+    bool has_exception;
 };
 
 TranslationReader *getTranslator(TxtConfReader& conf);
