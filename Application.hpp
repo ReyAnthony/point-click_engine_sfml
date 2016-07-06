@@ -40,8 +40,7 @@ private:
     bool running = false;
 
     sf::RenderWindow* window;
-    sf::View game_view;
-    sf::View GUI_action_panel_view;
+    sf::View GUI_panel_view;
     sf::Clock clock;
 
     TxtConfReader conf;

@@ -11,11 +11,7 @@
 class EventDispatcher : public Observable<sf::Event> {
 
 public:
-    virtual void notifyObservers(sf::Event& event, sf::RenderTarget&renderTarget) override {
-
-        //the observers may send a message
-        //like hey, i had to do this, but ONLY ME, not the next one
-        //Or we could use that not to send to everybody
+    virtual void notifyObservers(sf::Event& event, sf::RenderTarget& renderTarget) override {
 
         for(auto& obs : Observable<sf::Event>::observers) {
 

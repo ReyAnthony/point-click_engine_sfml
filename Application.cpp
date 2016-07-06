@@ -83,12 +83,11 @@ void Application::initRenderer() {
 
     window = new sf::RenderWindow(sf::VideoMode((unsigned int) Application::WIDTH,
                                                 (unsigned int) Application::HEIGHT),
-                                                conf.getAppName());
+                                                conf.getAppName() /*, sf::Style::Fullscreen */);
     window->setFramerateLimit(conf.getFramerate());
 
-    game_view = window->getView();
-    GUI_action_panel_view.reset(sf::FloatRect(0, 0, Application::WIDTH, 53));
-    GUI_action_panel_view.setViewport(sf::FloatRect(0, 0, 1, 0.08));
+    GUI_panel_view.reset(sf::FloatRect(0, 0, Application::WIDTH, 53));
+    GUI_panel_view.setViewport(sf::FloatRect(0, 0, 1, 0.08));
 }
 
 void Application::gameLoop() {
@@ -99,10 +98,14 @@ void Application::gameLoop() {
         sf::Time time_for_frame = clock.restart();
         sf::Event event;
 
+        window->setView(window->getDefaultView());
+
         while (window->pollEvent(event))
         {
-            if(event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed)
+            if(event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed){
+
                 event_dispatcher.notifyObservers(event, *window);
+            }
 
             if (event.type == sf::Event::Closed)
             {
@@ -113,15 +116,14 @@ void Application::gameLoop() {
         }
 
         window->clear(sf::Color::Black);
-        window->setView(game_view);
         current_scene->update(time_for_frame, *window);
         window->draw(*current_scene);
 
-        if(!has_exception){
-            window->setView(GUI_action_panel_view);
+       if(!has_exception){
+            window->setView(GUI_panel_view);
             window->draw(*action_panel);
             window->draw(*speech_panel);
-        }
+       }
 
         window->display();
     }

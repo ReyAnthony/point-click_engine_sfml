@@ -35,7 +35,6 @@ public:
 
             if(actionType != NOOP){
                 current_status = actionType;
-                std::cout << *b;
                 break;
             }
         }

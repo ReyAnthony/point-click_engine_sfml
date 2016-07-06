@@ -59,8 +59,7 @@ void GameScene::addObject(Object& object) {
 
 void GameScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
 
-    sf::View camera;
-    camera.reset(sf::FloatRect(0,0, Application::WIDTH, Application::HEIGHT));
+    sf::View camera = window.getDefaultView();
     camera.setCenter(player.getPosX(), Application::HEIGHT / 2);
     window.setView(camera);
 
@@ -108,42 +107,50 @@ Object &GameScene::getLastInsertedObject() {
 
 void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
 
-    current_action = action_panel.doAction(event, renderTarget);
+    if(!speech_panel.isVisible())
+    {
+        current_action = action_panel.doAction(event, renderTarget);
 
-    //backward because we treat those in front first
-    for(auto it = objects.rbegin(); it != objects.rend(); ++it ){
+        //backward because we treat those in front first
+        for(auto it = objects.rbegin(); it != objects.rend(); ++it ){
 
-        //Put the action in an action list, then execute it on next update ?
-        //We should not put 2 actions in the list
-        AbstractAction& action = (*it)->doAction(event, renderTarget, current_action);
-        auto actionType = action.getActionType();
+            AbstractAction& action = (*it)->doAction(event, renderTarget, current_action);
+            auto actionType = action.getActionType();
 
-        if(actionType == TALK && action.getActionType() == TALK){
+            if(actionType == TALK && action.getActionType() == TALK){
 
-            TalkAction& talk = (TalkAction&) action;
-            auto sentences = talk.getSentences();
-            speech_panel.setSentences(sentences);
+                TalkAction& talk = (TalkAction&) action;
+                auto sentences = talk.getSentences();
+                speech_panel.setSentences(sentences);
+            }
+            else if (actionType == SEE  && action.getActionType() == SEE){
+
+                SeeAction& see = (SeeAction&) action;
+                auto sentences = see.getSentences();
+                speech_panel.setSentences(sentences);
+
+            }
+            else if( actionType == GRAB ){
+                std::cout << "GRAB" << " " <<  (*it)->getName() << std::endl;
+            }
+            else if (actionType == USE){
+                std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
+            }
+            else if( actionType == GOTO){
+                std::cout << "GOTO" << " " <<  (*it)->getName() << std::endl;
+            }
+
+            if(actionType != NOOP)
+                break;
         }
-        else if (actionType == SEE  && action.getActionType() == SEE){
 
-            SeeAction& see = (SeeAction&) action;
-            auto sentences = see.getSentences();
-            speech_panel.setSentences(sentences);
+        player.doAction(event, renderTarget, current_action);
 
-        }
-        else if( actionType == GRAB ){
-            std::cout << "GRAB" << " " <<  (*it)->getName() << std::endl;
-        }
-        else if (actionType == USE){
-            std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
-        }
-        else if( actionType == GOTO){
-            std::cout << "GOTO" << " " <<  (*it)->getName() << std::endl;
-        }
+    }
+    else{
 
-        if(actionType != NOOP)
-            break;
+        speech_panel.goToNextSentence();
+
     }
 
-    player.doAction(event, renderTarget, current_action);
 }

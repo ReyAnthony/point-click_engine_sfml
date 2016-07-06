@@ -157,7 +157,6 @@ AbstractAction& Object::doAction(sf::Event& event, sf::RenderTarget& renderTarge
 
    if(isClicked(event, renderTarget) && action != nullptr) {
 
-       std::cout << name << " clicked" << std::endl;
        return *action;
    }
 
@@ -175,10 +174,11 @@ bool Object::isClicked(sf::Event& event, sf::RenderTarget& renderTarget) {
         auto x = event.mouseButton.x;
         auto y = event.mouseButton.y;
 
-        sf::Vector2i absolute_position(x, y);
-        auto relative_position = renderTarget.mapPixelToCoords(absolute_position);
+        sf::Vector2i pixel_position(x, y);
+        auto world_position = renderTarget.mapPixelToCoords(pixel_position);
 
-        if (sprite.getGlobalBounds().contains(relative_position)) {
+        if (sprite.getGlobalBounds().contains(world_position)) {
+            std::cout << name << " is clicked" << std::endl;
             return true;
         }
     }

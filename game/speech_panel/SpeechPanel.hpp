@@ -9,6 +9,7 @@
 #include <iosfwd>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class SpeechPanel : public sf::Drawable {
 
@@ -18,29 +19,39 @@ public:
         font.loadFromFile(default_font_path);
 
         text.setCharacterSize(30);
-        text.setPosition(10,0);
+        text.setPosition(10,10);
         text.setColor(sf::Color::White);
         text.setFont(font);
     }
 
     void setSentences(std::vector<std::string> sentences){
         this->sentences = sentences;
-        current_sentence = 0;
+        current_sentence_index = 0;
 
         is_visible = true;
 
-        if(!sentences.empty())
-            text.setString(sentences[current_sentence]);
+        if(!sentences.empty()){
+            text.setString(sentences[current_sentence_index]);
+        }
+
     }
 
-    bool goToNextSentence(){
+    void goToNextSentence(){
 
-        current_sentence++;
-        if(sentences.size() <= current_sentence){
-            text.setString(sentences[current_sentence]);
-            return true;
+        current_sentence_index++;
+        if( current_sentence_index < sentences.size()){
+            text.setString(sentences[current_sentence_index]);
         }
-        return true;
+        else{
+            current_sentence_index = 0;
+            is_visible = false;
+        }
+
+
+    }
+
+    bool isVisible(){
+        return is_visible;
     }
 
 private:
@@ -62,7 +73,7 @@ private:
     }
 
     std::vector<std::string> sentences;
-    int current_sentence = 0;
+    int current_sentence_index = 0;
 
     sf::Text text;
     sf::Font font;
