@@ -59,10 +59,6 @@ void GameScene::addObject(Object& object) {
 
 void GameScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
 
-    sf::View camera = window.getDefaultView();
-    camera.setCenter(player.getPosX(), Application::HEIGHT / 2);
-    window.setView(camera);
-
     drawing_list.clear();
 
     for(Object* obj : objects){
@@ -123,7 +119,7 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
                 auto sentences = talk.getSentences();
                 speech_panel.setSentences(sentences);
             }
-            else if (actionType == SEE  && action.getActionType() == SEE){
+            else if (actionType == SEE && action.getActionType() == SEE){
 
                 SeeAction& see = (SeeAction&) action;
                 auto sentences = see.getSentences();

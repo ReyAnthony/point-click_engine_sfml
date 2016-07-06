@@ -42,7 +42,8 @@ public:
 
 protected:
 
-    bool isClicked(sf::Event& event, sf::RenderTarget& renderTarget);
+    virtual bool isClicked(sf::Event& event, sf::RenderTarget& renderTarget);
+    sf::Sprite sprite;
 
 private:
 
@@ -51,7 +52,6 @@ private:
 
     std::string name;
     sf::Texture texture;
-    sf::Sprite sprite;
 
     sf::Time elapsed_time;
     int ms_beetwen_frames = 0;

@@ -98,7 +98,9 @@ void Application::gameLoop() {
         sf::Time time_for_frame = clock.restart();
         sf::Event event;
 
-        window->setView(window->getDefaultView());
+        sf::View game_view = window->getDefaultView();
+        game_view.setCenter(player_character->getPosX(), Application::HEIGHT / 2);
+        window->setView(game_view);
 
         while (window->pollEvent(event))
         {

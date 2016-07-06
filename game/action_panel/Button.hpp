@@ -42,6 +42,20 @@ public:
 
 private:
     GUIActionsType actionType;
+    bool isClicked(sf::Event& event, sf::RenderTarget& renderTarget) override {
+        if(event.type == sf::Event::MouseButtonPressed){
+
+            auto x = event.mouseButton.x;
+            auto y = event.mouseButton.y;
+
+            sf::Vector2f pixel_position(x, y);
+
+            if (sprite.getGlobalBounds().contains(pixel_position)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 };
 
