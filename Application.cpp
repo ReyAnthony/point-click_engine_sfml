@@ -50,7 +50,7 @@ void Application::start() {
                                      *speech_panel);
 
             auto starting_level_file = conf.getStartingLevel();
-            this->current_scene = level_loader.generateDataFromLevelFile(starting_level_file);
+            this->current_scene = level_loader.generateGameSceneFromLevelFile(starting_level_file);
             event_dispatcher.registerObserver(*current_scene);
         }
         catch(boost::exception &e){

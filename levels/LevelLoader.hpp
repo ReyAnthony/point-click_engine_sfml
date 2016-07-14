@@ -35,7 +35,7 @@ public:
                 ActionPanel& action_panel,
                 SpeechPanel& speech_panel);
 
-    GameScene * generateDataFromLevelFile(std::string levelFile);
+    GameScene *generateGameSceneFromLevelFile(std::string levelFile);
 
 private:
 
@@ -55,7 +55,6 @@ private:
 
     std::string getAttributeAsTranslatedString(std::string attribute, pt::ptree::value_type &v);
     std::string getNodeValueAsTranslatedString(pt::ptree::value_type &v);
-
 
 
     GameScene * generateScene(pt::ptree& tree, std::list<std::string> include_files);

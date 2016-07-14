@@ -103,7 +103,12 @@ Object &GameScene::getLastInsertedObject() {
 
 void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
 
-    if(!speech_panel.isVisible())
+    if(speech_panel.isVisible()){
+
+        speech_panel.goToNextSentence();
+
+    }
+    else
     {
         current_action = action_panel.doAction(event, renderTarget);
 
@@ -113,13 +118,13 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
             AbstractAction& action = (*it)->doAction(event, renderTarget, current_action);
             auto actionType = action.getActionType();
 
-            if(actionType == TALK && action.getActionType() == TALK){
+            if(actionType == TALK){
 
                 TalkAction& talk = (TalkAction&) action;
                 auto sentences = talk.getSentences();
                 speech_panel.setSentences(sentences);
             }
-            else if (actionType == SEE && action.getActionType() == SEE){
+            else if (actionType == SEE){
 
                 SeeAction& see = (SeeAction&) action;
                 auto sentences = see.getSentences();
@@ -141,11 +146,6 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
         }
 
         player.doAction(event, renderTarget, current_action);
-
-    }
-    else{
-
-        speech_panel.goToNextSentence();
 
     }
 

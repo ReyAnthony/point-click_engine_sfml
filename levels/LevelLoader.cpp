@@ -19,7 +19,7 @@ LevelLoader::LevelLoader(TranslationReader& translation_reader,
           speech_panel(speech_panel) {
 }
 
-GameScene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
+GameScene *LevelLoader::generateGameSceneFromLevelFile(std::string levelFile) {
 
     pt::ptree tree;
     pt::read_xml(levelFile, tree);
@@ -28,10 +28,10 @@ GameScene *LevelLoader::generateDataFromLevelFile(std::string levelFile) {
 
     for(pt::ptree::value_type &v : tree.get_child(""))
     {
-
         auto node_type = v.first;
         if(node_type != "" && node_type == "include")
         {
+            //Translation is not needed
             auto node_value = getNodeValueAsTranslatedString(v);
             auto include_file_with_path = configuration_reader.prependLevelPathAndAppendFileType(node_value);
             include_files.push_back(include_file_with_path);
