@@ -1,0 +1,9 @@
+{
+  "dict": {
+    "level_1_name": "The first level",
+    "action_see": "Look at",
+    "cant_look": "I can't look at this !",
+    "suspended_pirate": "The suspended pirate",
+    "table": "a table"
+  }
+}

@@ -6,6 +6,7 @@
 #define SFML_TEST_APPLICATION_HPP
 
 #include "translations/TranslationReader.hpp"
+#include "translations/JSONTranslationReader.hpp"
 #include "translations/XMLTranslationReader.hpp"
 #include "game/GameScene.hpp"
 #include "conf/ConfReader.hpp"

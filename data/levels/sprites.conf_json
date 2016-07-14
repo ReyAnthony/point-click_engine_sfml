@@ -1,0 +1,16 @@
+{
+  "provide": {
+    "providen_level_1_name": "#--level_1_name",
+    "providen_background_level": "./data/sprites/LV1_back.png",
+    "providen_sprite_player": "./data/sprites/pirate0.png",
+    "providen_sprite_pirate3": "./data/sprites/pirate3.png",
+    "providen_ms_pirate3": "120",
+    "providen_frames_pirate3":"6",
+    "providen_sprite_table":"./data/sprites/table-1.png",
+    "providen_sprite_table2":"./data/sprites/table-2.png",
+    "providen_sprite_table3":"./data/sprites/table-3.png",
+    "providen_sprite_table4":"./data/sprites/table-4.png",
+    "providen_sprite_table5":"./data/sprites/table-5.png",
+    "providen_sprite_draperie":"./data/sprites/draperie.png"
+  }
+}

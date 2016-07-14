@@ -1,0 +1,9 @@
+{
+  "dict": {
+    "level_1_name": "Le niveau 1",
+    "action_see": "Regarder",
+    "cant_look": "Je ne peux pas regarder ça !",
+    "suspended_pirate": "le pirate suspendu",
+    "table": "une table"
+  }
+}

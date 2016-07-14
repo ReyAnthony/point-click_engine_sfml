@@ -8,10 +8,12 @@
       <sourceFolder url="file://$MODULE_DIR$/exceptions/ExceptionScene.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/levels/LevelLoader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/levels/LevelLoader.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/translations/TranslationReader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/translations/JSONTranslationReader.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/translations/XMLTranslationReader.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/translations/TranslationReader.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/translations/TranslationReader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/translations/XMLTranslationReader.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/translations/JSONTranslationReader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/translations/TranslationReader.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/EventDispatcher.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/Observer.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/Observable.cpp" isTestSource="false" />

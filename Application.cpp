@@ -31,6 +31,8 @@ void Application::start() {
         conf.loadConfiguration();
         trad = getTranslator(conf);
 
+        //std::cout << trad->getTranslationFromKey("level_1_name") << std::endl;
+
         player_character = new Player(conf.getPlayerName(),
                                       0,
                                       0,
@@ -145,7 +147,7 @@ TranslationReader *getTranslator(TxtConfReader& conf) {
     if (conf_type == "conf_xml")
         return new XMLTranslationReader(conf.getDefaultTranslationFile());
     else if(conf_type == "conf_json")
-        throw Exception("Not implemented yet : conf_json");
+        return new JSONTranslationReader(conf.getDefaultTranslationFile());
     else
         throw Exception("No such configuration type "+ conf.getDefaultConfType());
 }
