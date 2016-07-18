@@ -11,7 +11,7 @@
 #include <string>
 #include <iostream>
 #include "../events/GUIActionType.hpp"
-#include "AbstractAction.hpp"
+#include "Action.hpp"
 
 class Object : public sf::Drawable {
 
@@ -21,11 +21,7 @@ public:
     Object(std::string name, int pos_x, int pos_y, std::string texture_file, int frames = 1, int ms_beetwen_frames = 0, int y_limit = -5000);
     Object & operator=(const Object& ref);
     Object(const Object& ref);
-    ~Object(){
-        for(auto action : actions){
-            delete action.second;
-        }
-    }
+    ~Object();
 
     void update(sf::Time& deltaTime);
     void setPosX(int pos_x);
@@ -36,9 +32,10 @@ public:
     int getHeight() const;
     int getWidth() const;
     std::string getName() const;
-    void addAction(GUIActionsType key, AbstractAction* action);
+    void setActions(std::map<GUIActionsType, Action *> actions);
+    void addAction(GUIActionsType key, Action * action);
 
-    virtual AbstractAction& doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType);
+    virtual Action & doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType);
 
 protected:
 
@@ -61,7 +58,7 @@ private:
 
     bool animated = false;
 
-    std::map<GUIActionsType, AbstractAction*> actions;
+    std::map<GUIActionsType, Action*> actions;
 };
 
 

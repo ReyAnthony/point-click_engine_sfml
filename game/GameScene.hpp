@@ -10,8 +10,6 @@
 #include "Object.hpp"
 #include "AbstractScene.hpp"
 #include "action_panel/ActionPanel.hpp"
-#include "actions/TalkAction.hpp"
-#include "actions/SeeAction.hpp"
 #include "speech_panel/SpeechPanel.hpp"
 
 class GameScene : public AbstractScene {

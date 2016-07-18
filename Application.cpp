@@ -5,6 +5,7 @@
 #include "Application.hpp"
 #include "events/EventDispatcher.hpp"
 #include "game/Player.hpp"
+#include "actions/XMLActionDefaultReader.hpp"
 
 Application::~Application() {
     delete window;
@@ -42,6 +43,9 @@ void Application::start() {
 
         try{
 
+            XMLActionDefaultReader* xmlActionDefaultReader =
+                    new XMLActionDefaultReader("./data/actions/actions_default.conf_xml");
+
             speech_panel = new SpeechPanel(conf.getDefaultFontPath());
             action_panel = new ActionPanel(conf);
             LevelLoader level_loader(*trad,
@@ -49,7 +53,8 @@ void Application::start() {
                                      *player_character,
                                      event_dispatcher,
                                      *action_panel,
-                                     *speech_panel);
+                                     *speech_panel,
+                                    *xmlActionDefaultReader);
 
             auto starting_level_file = conf.getStartingLevel();
             this->current_scene = level_loader.generateGameSceneFromLevelFile(starting_level_file);

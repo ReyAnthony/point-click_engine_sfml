@@ -4,8 +4,6 @@
 
 #include "Object.hpp"
 #include "../exceptions/Exception.hpp"
-#include "actions/TalkAction.hpp"
-#include "actions/NoopAction.hpp"
 
 
 Object::Object() {
@@ -26,7 +24,7 @@ Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file,
     initTextureAndSprite(texture_file);
     sprite.setPosition(pos_x, pos_y);
 
-    actions.insert(std::pair<GUIActionsType , AbstractAction* >(NOOP, new NoopAction()));
+    actions.insert(std::pair<GUIActionsType , Action *>(NOOP, new Action(NOOP)));
 }
 
 Object &Object::operator=(const Object& ref) {
@@ -151,7 +149,7 @@ int Object::getWidth() const {
     return texture.getSize().x;
 }
 
-AbstractAction& Object::doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) {
+Action & Object::doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) {
 
     auto action = actions[actionType];
 
@@ -178,13 +176,24 @@ bool Object::isClicked(sf::Event& event, sf::RenderTarget& renderTarget) {
         auto world_position = renderTarget.mapPixelToCoords(pixel_position);
 
         if (sprite.getGlobalBounds().contains(world_position)) {
-            std::cout << name << " is clicked" << std::endl;
             return true;
         }
     }
     return false;
 }
 
-void Object::addAction(GUIActionsType key, AbstractAction* action) {
-    actions.insert(std::pair<GUIActionsType, AbstractAction*>(key, action));
+void Object::addAction(GUIActionsType key, Action * action) {
+    //here we want to replace if it already exists (default value are not overridden with insert)
+    actions[key] = action;
+
+}
+
+Object::~Object() {
+    for(auto action : actions){
+        delete action.second;
+    }
+}
+
+void Object::setActions(std::map<GUIActionsType, Action *> actions) {
+    this->actions = actions;
 }

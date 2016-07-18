@@ -9,14 +9,16 @@ LevelLoader::LevelLoader(TranslationReader& translation_reader,
                          Object& player,
                          EventDispatcher& event_dispatcher,
                          ActionPanel& action_panel,
-                         SpeechPanel& speech_panel)
+                         SpeechPanel& speech_panel,
+                         XMLActionDefaultReader& xml_action_default_reader)
         :
           translation_reader(translation_reader),
           configuration_reader(configuration_reader),
           player(player),
           event_dispatcher(event_dispatcher),
           action_panel(action_panel),
-          speech_panel(speech_panel) {
+          speech_panel(speech_panel),
+          xml_action_default_reader(xml_action_default_reader){
 }
 
 GameScene *LevelLoader::generateGameSceneFromLevelFile(std::string levelFile) {
@@ -116,6 +118,8 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 auto y_limit = getAttributeWithDefaultValue<int>("y_limit", v, -5000);
 
                 Object* obj = new Object (obj_name, pos_x, pos_y, sprite, frames, ms, y_limit);
+                auto default_actions = xml_action_default_reader.getActions();
+                obj->setActions(default_actions);
                 scene.addObject(*obj);
             }
 
@@ -134,14 +138,13 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 Object& last_inserted_object = scene.getLastInsertedObject();
 
                 if(parent_node_type == "see"){
-                    SeeAction* see_action = new SeeAction(sentences);
+                    Action* see_action = new Action(SEE, sentences);
                     last_inserted_object.addAction(SEE, see_action);
                 }
                 else {
-                    TalkAction* talk_action = new TalkAction(sentences);
+                    Action* talk_action = new Action(TALK, sentences);
                     last_inserted_object.addAction(TALK, talk_action);
                 }
-
             }
 
             //TODO colliders

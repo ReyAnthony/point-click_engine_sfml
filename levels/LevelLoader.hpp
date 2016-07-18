@@ -20,8 +20,9 @@
 #include "../conf/ConfReader.hpp"
 #include "../game/Object.hpp"
 #include "../events/EventDispatcher.hpp"
-#include "../game/actions/TalkAction.hpp"
-#include "../game/actions/SeeAction.hpp"
+#include "../game/Action.hpp"
+#include "../actions/XMLActionDefaultReader.hpp"
+
 
 namespace pt = boost::property_tree;
 
@@ -33,7 +34,7 @@ public:
                 TxtConfReader& configuration_reader,
                 Object& player, EventDispatcher& event_dispatcher,
                 ActionPanel& action_panel,
-                SpeechPanel& speech_panel);
+                SpeechPanel& speech_panel, XMLActionDefaultReader& xml_action_default_reader);
 
     GameScene *generateGameSceneFromLevelFile(std::string levelFile);
 
@@ -68,6 +69,7 @@ private:
     ActionPanel& action_panel;
     TranslationReader& translation_reader;
     TxtConfReader& configuration_reader;
+    XMLActionDefaultReader& xml_action_default_reader;
     Object& player;
     SpeechPanel& speech_panel;
     std::string translation_escape_char = configuration_reader.getTranslationEscapeChar();

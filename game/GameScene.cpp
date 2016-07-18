@@ -106,7 +106,6 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
     if(speech_panel.isVisible()){
 
         speech_panel.goToNextSentence();
-
     }
     else
     {
@@ -115,21 +114,13 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
         //backward because we treat those in front first
         for(auto it = objects.rbegin(); it != objects.rend(); ++it ){
 
-            AbstractAction& action = (*it)->doAction(event, renderTarget, current_action);
+            Action & action = (*it)->doAction(event, renderTarget, current_action);
             auto actionType = action.getActionType();
 
-            if(actionType == TALK){
+            if(actionType == TALK || actionType == SEE){
 
-                TalkAction& talk = (TalkAction&) action;
-                auto sentences = talk.getSentences();
+                auto sentences = action.getSentences();
                 speech_panel.setSentences(sentences);
-            }
-            else if (actionType == SEE){
-
-                SeeAction& see = (SeeAction&) action;
-                auto sentences = see.getSentences();
-                speech_panel.setSentences(sentences);
-
             }
             else if( actionType == GRAB ){
                 std::cout << "GRAB" << " " <<  (*it)->getName() << std::endl;
