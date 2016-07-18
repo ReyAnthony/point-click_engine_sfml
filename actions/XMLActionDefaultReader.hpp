@@ -58,9 +58,7 @@ public:
     }
 
     ~XMLActionDefaultReader(){
-        for(auto val : actions){
-            delete val.second;
-        }
+      //no need to delete, the object will do it
     }
 
     std::map<GUIActionsType, Action *> getActions(){

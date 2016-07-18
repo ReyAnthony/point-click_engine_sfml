@@ -52,6 +52,7 @@ private:
     Player* player_character;
     ActionPanel* action_panel;
     SpeechPanel* speech_panel;
+    XMLActionDefaultReader* xml_action_default_reader;
 
     bool has_exception;
 };

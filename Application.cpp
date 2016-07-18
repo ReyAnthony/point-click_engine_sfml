@@ -23,6 +23,9 @@ Application::~Application() {
     if(action_panel != nullptr)
         delete action_panel;
 
+    if(xml_action_default_reader != nullptr)
+        delete xml_action_default_reader;
+
 
 }
 
@@ -43,7 +46,7 @@ void Application::start() {
 
         try{
 
-            XMLActionDefaultReader* xmlActionDefaultReader =
+            xml_action_default_reader =
                     new XMLActionDefaultReader(conf, *trad);
 
             speech_panel = new SpeechPanel(conf.getDefaultFontPath());
@@ -54,7 +57,7 @@ void Application::start() {
                                      event_dispatcher,
                                      *action_panel,
                                      *speech_panel,
-                                    *xmlActionDefaultReader);
+                                    *xml_action_default_reader);
 
             auto starting_level_file = conf.getStartingLevel();
             this->current_scene = level_loader.generateGameSceneFromLevelFile(starting_level_file);
