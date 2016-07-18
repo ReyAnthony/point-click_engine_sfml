@@ -110,3 +110,11 @@ std::string TxtConfReader::generatedFullButtonFilePath(std::string filename) {
 std::string TxtConfReader::getButtonPath(GUIActionsType type) {
     return buttons_path[type];
 }
+
+std::string TxtConfReader::getDefaultActionConfPath() {
+
+    auto actions_dir = config_values[ACTIONS_DIR];
+    auto default_conf_type = config_values[DEFAULT_CONF_TYPE];
+
+    return actions_dir + "/" + "actions_default" + "." + default_conf_type;
+}

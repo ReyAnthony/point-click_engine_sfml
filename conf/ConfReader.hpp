@@ -39,6 +39,7 @@ public:
     int getPlayerMsBeetwenEachFrames();
     int getPlayerFrames();
     std::string getButtonPath(GUIActionsType actionType);
+    std::string getDefaultActionConfPath();
 
 private:
 

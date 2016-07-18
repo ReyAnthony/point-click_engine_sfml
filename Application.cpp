@@ -44,7 +44,7 @@ void Application::start() {
         try{
 
             XMLActionDefaultReader* xmlActionDefaultReader =
-                    new XMLActionDefaultReader("./data/actions/actions_default.conf_xml");
+                    new XMLActionDefaultReader(conf, *trad);
 
             speech_panel = new SpeechPanel(conf.getDefaultFontPath());
             action_panel = new ActionPanel(conf);
