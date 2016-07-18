@@ -42,6 +42,7 @@ private:
     Object& player;
     ActionPanel& action_panel;
     SpeechPanel& speech_panel;
+    Object* last_inserted;
     GUIActionsType current_action = NOOP;
 };
 

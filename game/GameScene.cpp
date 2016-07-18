@@ -18,6 +18,7 @@ GameScene::GameScene(const GameScene & ref) : player(ref.player),  action_panel(
 
     objects = ref.objects;
     level_name = ref.level_name;
+    last_inserted = ref.last_inserted;
 }
 
 GameScene &GameScene::operator=(const GameScene & ref) {
@@ -29,6 +30,7 @@ GameScene &GameScene::operator=(const GameScene & ref) {
     player = ref.player;
     action_panel = ref.action_panel;
     speech_panel = ref.speech_panel;
+    last_inserted = ref.last_inserted;
 
     return *this;
 }
@@ -55,6 +57,8 @@ void GameScene::addObject(Object& object) {
 
                   return tested < other;
               });
+
+    last_inserted = &object;
 }
 
 void GameScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
@@ -98,7 +102,7 @@ void GameScene::updateDrawingPriorities() {
 }
 
 Object &GameScene::getLastInsertedObject() {
-    return **(objects.end() - 1);
+    return *last_inserted;
 }
 
 void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
@@ -126,6 +130,8 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
                 std::cout << "GRAB" << " " <<  (*it)->getName() << std::endl;
             }
             else if (actionType == USE){
+
+
                 std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
             }
             else if( actionType == GOTO){
@@ -136,7 +142,7 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
                 break;
         }
 
-        player.doAction(event, renderTarget, current_action);
+        //player.doAction(event, renderTarget, current_action);
 
     }
 

@@ -112,6 +112,8 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 auto pos_y = getAttribute<int>("pos_y", v);
                 auto pos_x = getAttribute<int>("pos_x", v);
 
+                std::cout << obj_name << " created" << std::endl;
+
                 //optional
                 auto frames = getAttributeWithDefaultValue<int>("frames", v, 1);
                 auto ms = getAttributeWithDefaultValue<int>("ms", v, 0);
@@ -133,6 +135,8 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                     node_type = v.first;
                     if(node_type == "say")
                         sentences.push_back(getNodeValueAsTranslatedString(v));
+
+                    std::cout << v.second.data() << std::endl;
                 }
 
                 Object& last_inserted_object = scene.getLastInsertedObject();

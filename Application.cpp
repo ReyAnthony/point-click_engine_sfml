@@ -125,6 +125,7 @@ void Application::gameLoop() {
         }
 
         window->clear(sf::Color::Black);
+        player_character->update(time_for_frame);
         current_scene->update(time_for_frame, *window);
         window->draw(*current_scene);
 

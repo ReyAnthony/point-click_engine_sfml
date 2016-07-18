@@ -20,13 +20,21 @@
 
     <!-- static objects -->
     <object name="#--table" sprite="providen_sprite_table4" pos_x="945" pos_y="200" y_limit="320">
-        <collider x1="" x2="" y1="" y2=""/>
+
     </object>
-    <object name="Le pirate qui ressemble au joueur" sprite="providen_sprite_player" pos_x="945" pos_y="350" y_limit="240"/>
+    <object name="Le pirate qui ressemble au joueur" sprite="providen_sprite_player" pos_x="945" pos_y="350" y_limit="240">
+        <talk>
+            <say>Bien le bonjour !</say>
+        </talk>
+    </object>
     <object name="#--table" sprite="providen_sprite_table2" pos_x="430" pos_y="425" y_limit="110"/>
     <object name="#--table" sprite="providen_sprite_table3" pos_x="670" pos_y="490" y_limit="110"/>
     <object name="#--table" sprite="providen_sprite_table" pos_x="80" pos_y="505" y_limit="110"/>
-    <object name="draperie" sprite="providen_sprite_draperie" pos_x="1200" pos_y="170" y_limit="420"/>
+    <object name="draperie" sprite="providen_sprite_draperie" pos_x="1200" pos_y="170" y_limit="420">
+        <see>
+            <say>C'est une draperie</say>
+        </see>
+    </object>
     <object name="#--table" sprite="providen_sprite_table5" pos_x="1550" pos_y="430" y_limit="170"/>
 
 

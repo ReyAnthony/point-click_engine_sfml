@@ -20,12 +20,13 @@ public:
            std::string texture_file,
            int frames = 1,
            int ms_beetwen_frames = 0)
-            : Object(name, pos_x, pos_y, texture_file, frames, ms_beetwen_frames, 0)
+            : Object(name, pos_x, pos_y, texture_file, frames, ms_beetwen_frames, 0), empty_action(NOOP)
     {
-
     }
 
     Action & doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType) override;
+    void update(sf::Time& deltaTime) override;
+    Action empty_action;
 
 };
 

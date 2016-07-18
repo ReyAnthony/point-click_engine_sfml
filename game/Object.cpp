@@ -197,3 +197,7 @@ Object::~Object() {
 void Object::setActions(std::map<GUIActionsType, Action *> actions) {
     this->actions = actions;
 }
+
+bool Object::isColliding(Object& other) {
+    return other.sprite.getGlobalBounds().intersects(this->sprite.getGlobalBounds());
+}

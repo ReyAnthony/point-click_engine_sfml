@@ -23,7 +23,7 @@ public:
     Object(const Object& ref);
     ~Object();
 
-    void update(sf::Time& deltaTime);
+    virtual void update(sf::Time& deltaTime);
     void setPosX(int pos_x);
     void setPosY(int pos_y);
     int getPosX() const;
@@ -36,6 +36,8 @@ public:
     void addAction(GUIActionsType key, Action * action);
 
     virtual Action & doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType);
+
+    bool isColliding(Object& other);
 
 protected:
 
