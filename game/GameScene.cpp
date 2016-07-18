@@ -125,17 +125,34 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
 
                 auto sentences = action.getSentences();
                 speech_panel.setSentences(sentences);
+
             }
             else if( actionType == GRAB ){
-                std::cout << "GRAB" << " " <<  (*it)->getName() << std::endl;
+
+                if(player.isColliding(**it)){
+                    std::cout << "GRAB" << " " <<  (*it)->getName() << std::endl;
+                }
+                else{
+                    std::vector<std::string> sentences;
+                    sentences.push_back("I'm too far away ... //FIXME");
+                    speech_panel.setSentences(sentences);
+                }
             }
             else if (actionType == USE){
 
+                if(player.isColliding(**it)){
+                    std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
+                }
+                else{
+                    std::vector<std::string> sentences;
+                    sentences.push_back("I'm too far away ... //FIXME");
+                    speech_panel.setSentences(sentences);
+                }
 
-                std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
             }
             else if( actionType == GOTO){
                 std::cout << "GOTO" << " " <<  (*it)->getName() << std::endl;
+                //pathfind ...
             }
 
             if(actionType != NOOP)
