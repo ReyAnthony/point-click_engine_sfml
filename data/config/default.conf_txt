@@ -22,6 +22,6 @@ default-font = GlacialIndifference-Regular.otf
 
 [player]
 ms = 120
-sprite = ./data/sprites/pirate0.png
+sprite = ./data/sprites/hilda.png
 name = Guybrush Threepwood
-frames = 1
+frames_per_anim = 3

@@ -10,8 +10,10 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include <jmorecfg.h>
 #include "../events/GUIActionType.hpp"
 #include "Action.hpp"
+#include "../pathfind/Collider.h"
 
 class Object : public sf::Drawable {
 
@@ -34,20 +36,18 @@ public:
     std::string getName() const;
     void setActions(std::map<GUIActionsType, Action *> actions);
     void addAction(GUIActionsType key, Action * action);
+    void setCollider(Collider collider);
+    bool isColliding(Object& other);
+    bool isCollidingUsingColliders(Object& other);
 
     virtual Action & doAction(sf::Event& event, sf::RenderTarget& renderTarget, GUIActionsType actionType);
 
-    bool isColliding(Object& other);
 
 protected:
 
     virtual bool isClicked(sf::Event& event, sf::RenderTarget& renderTarget);
     sf::Sprite sprite;
-
-private:
-
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates) const;
-    void initTextureAndSprite(std::string texture_file);
+    bool animated = false;
 
     std::string name;
     sf::Texture texture;
@@ -58,7 +58,12 @@ private:
     int current_frame = 0;
     int y_limit = -5000;
 
-    bool animated = false;
+    Collider collider;
+
+private:
+
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates) const;
+    void initTextureAndSprite(std::string texture_file);
 
     std::map<GUIActionsType, Action*> actions;
 };

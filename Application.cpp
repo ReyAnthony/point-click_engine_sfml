@@ -3,9 +3,7 @@
 //
 
 #include "Application.hpp"
-#include "events/EventDispatcher.hpp"
-#include "game/Player.hpp"
-#include "actions/XMLActionDefaultReader.hpp"
+
 
 Application::~Application() {
     delete window;
@@ -83,7 +81,6 @@ void Application::start() {
         run();
     }
     catch(Exception &e){
-
         delete current_scene;
     }
 }
@@ -133,7 +130,6 @@ void Application::gameLoop() {
         }
 
         window->clear(sf::Color::Black);
-        player_character->update(time_for_frame);
         current_scene->update(time_for_frame, *window);
         window->draw(*current_scene);
 

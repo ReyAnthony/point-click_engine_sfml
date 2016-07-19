@@ -75,7 +75,7 @@ private:
     const std::string FRAME_MS = "player.ms";
     const std::string SPRITE = "player.sprite";
     const std::string NAME = "player.name";
-    const std::string FRAMES = "player.frames";
+    const std::string FRAMES = "player.frames_per_anim";
 
 
     const std::string CONFIG_FILE = "./data/config/default.conf_txt";

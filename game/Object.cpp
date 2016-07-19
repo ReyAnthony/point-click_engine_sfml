@@ -30,21 +30,17 @@ Object::Object(std::string name, int pos_x, int pos_y, std::string texture_file,
 Object &Object::operator=(const Object& ref) {
 
     name = ref.name;
-
     texture = ref.texture;
     sprite = ref.sprite;
     sprite.setTexture(texture);
-
     current_frame = ref.current_frame;
     animated = ref.animated;
     frames = ref.frames;
     ms_beetwen_frames = ref.ms_beetwen_frames;
-
     y_limit = ref.y_limit;
-
     elapsed_time = ref.elapsed_time;
-
     actions = ref.actions;
+    collider = ref.collider;
 
     return *this;
 }
@@ -55,17 +51,14 @@ Object::Object(const Object& ref) {
     texture = ref.texture;
     sprite = ref.sprite;
     sprite.setTexture(texture);
-
     current_frame = ref.current_frame;
     animated = ref.animated;
     frames = ref.frames;
     ms_beetwen_frames = ref.ms_beetwen_frames;
-
     y_limit = ref.y_limit;
-
     actions = ref.actions;
-
     elapsed_time = ref.elapsed_time;
+    collider = ref.collider;
 
 }
 
@@ -199,5 +192,28 @@ void Object::setActions(std::map<GUIActionsType, Action *> actions) {
 }
 
 bool Object::isColliding(Object& other) {
-    return other.sprite.getGlobalBounds().intersects(this->sprite.getGlobalBounds());
+
+    if( other.sprite.getGlobalBounds().intersects(this->sprite.getGlobalBounds())){
+        std::cout << this->name  << " collides with " << other.name << std::endl;
+        return true;
+    }
+
+    return false;
+}
+
+void Object::setCollider(Collider collider) {
+    this->collider = collider;
+}
+
+bool Object::isCollidingUsingColliders(Object& other) {
+
+    auto other_collider = other.collider;
+
+    if( other_collider.isInside(collider.getAbcisse() + collider.getWidth() / 2,
+                                   collider.getOrderly() + collider.getHeight() / 2))
+    {
+        return true;
+    }
+
+    return false;
 }

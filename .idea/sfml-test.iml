@@ -45,9 +45,11 @@
       <sourceFolder url="file://$MODULE_DIR$/game/speech_panel/SpeechPanel.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/speech_panel/SpeechPanel.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Application.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/pathfind/Collider.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/pathfind/Collider.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/conf/ConfReader.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/conf/ConfReader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Application.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />

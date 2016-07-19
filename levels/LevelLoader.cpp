@@ -121,8 +121,6 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 auto pos_y = getAttribute<int>("pos_y", v);
                 auto pos_x = getAttribute<int>("pos_x", v);
 
-                std::cout << obj_name << " created" << std::endl;
-
                 //optional
                 auto frames = getAttributeWithDefaultValue<int>("frames", v, 1);
                 auto ms = getAttributeWithDefaultValue<int>("ms", v, 0);
@@ -132,6 +130,19 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 auto default_actions = xml_action_default_reader.getActions();
                 obj->setActions(default_actions);
                 scene.addObject(*obj);
+            }
+
+            if(node_type == "collider"){
+
+                auto& obj = scene.getLastInsertedObject();
+
+                auto x = getAttributeWithDefaultValue<int>("x", v, 0);
+                auto y = getAttributeWithDefaultValue<int>("y", v, obj.getYLimit());
+                auto width = getAttributeWithDefaultValue<int>("width", v, obj.getWidth());
+                auto height = getAttributeWithDefaultValue<int>("height", v, 0);
+
+                Collider collider(width, height, x + obj.getPosX() ,y + obj.getPosY());
+                obj.setCollider(collider);
             }
 
             if(node_type == "talk" || node_type == "see" || node_type == "use"){
@@ -146,8 +157,6 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                         node_type = v.first;
                         if(node_type == "say")
                             sentences.push_back(getNodeValueAsTranslatedString(v));
-
-                        std::cout << v.second.data() << std::endl;
                     }
 
                     Object& last_inserted_object = scene.getLastInsertedObject();
@@ -194,12 +203,6 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                     }
                 }
             }
-
-            //TODO colliders
-            if(node_type == "collider"){
-                Object&last_inserted_object = scene.getLastInsertedObject();
-            }
-
         }
 
         walk(v.second, scene);

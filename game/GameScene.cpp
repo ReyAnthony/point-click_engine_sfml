@@ -63,10 +63,24 @@ void GameScene::addObject(Object& object) {
 
 void GameScene::update(sf::Time& deltaTime, sf::RenderWindow& window) {
 
+    bool player_had_a_colisions = false;
     drawing_list.clear();
 
     for(Object* obj : objects){
         obj->update(deltaTime);
+
+        if(player.isCollidingUsingColliders(*obj))
+            player_had_a_colisions = true;
+    }
+
+    player.update(deltaTime);
+
+    if(player_had_a_colisions || player.getPosX() <= 1
+       || player.getPosY() <= 1
+       || player.getPosX() > background.getWidth()
+       || player.getPosY() > background.getHeight())
+    {
+        ((Player&)player).revertToPositionBeforeUpdate();
     }
 
     updateDrawingPriorities();

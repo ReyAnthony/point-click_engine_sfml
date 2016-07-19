@@ -21,7 +21,7 @@ public:
 
     void notify(SwitchLevelAction& event, sf::RenderTarget& renderTarget){
 
-        std::cout << "got change level event" << std::endl;
+        std::cout << "got change level event to : " <<  event.getLevel() << std::endl;
         dispatcher.removeAllObservers();
 
         current_level = level_map[event.getLevel()];

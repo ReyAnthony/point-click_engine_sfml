@@ -23,6 +23,7 @@
 #include "../game/Action.hpp"
 #include "../actions/XMLActionDefaultReader.hpp"
 #include "../events/LevelSwitchObserver.hpp"
+#include "../pathfind/Collider.h"
 
 
 namespace pt = boost::property_tree;
