@@ -16,7 +16,7 @@
 
     <object name="#--table" sprite="providen_sprite_table2" pos_x="430" pos_y="425" y_limit="110">
         <use>
-            <goto>level1</goto>
+            <goto>level3</goto>
         </use>
     </object>
     <object name="#--table" sprite="providen_sprite_table3" pos_x="670" pos_y="490" y_limit="110"/>
