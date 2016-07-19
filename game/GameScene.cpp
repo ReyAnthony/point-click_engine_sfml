@@ -142,6 +142,9 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
 
                 if(player.isColliding(**it)){
                     std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
+                    SwitchLevelAction switchLevelAction(action.getNewLevel());
+                    this->notifyObservers(switchLevelAction, renderTarget);
+                    break;
                 }
                 else{
                     std::vector<std::string> sentences;

@@ -28,7 +28,10 @@ public:
 
     std::string getDefaultConfType();
     std::string getDefaultTranslationFile();
-    std::string getStartingLevel();
+    std::string getStartingLevelPath();
+    std::string getStartingLevelFile(){
+        return  config_values[STARTING_LEVEL];
+    }
     unsigned int getFramerate();
     std::string getDefaultFontPath();
     std::string prependLevelPathAndAppendFileType(std::string name);
@@ -39,6 +42,7 @@ public:
     int getPlayerMsBeetwenEachFrames();
     int getPlayerFrames();
     std::string getButtonPath(GUIActionsType actionType);
+    std::string getLevelPath(std::string level);
     std::string getDefaultActionConfPath();
 
 private:

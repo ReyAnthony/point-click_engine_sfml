@@ -49,13 +49,21 @@ std::string TxtConfReader::getDefaultTranslationFile() {
     return translation_dir + "/" + default_dct_filename+ default_lang + "." + default_conf_type;
 }
 
-std::string TxtConfReader::getStartingLevel() {
+std::string TxtConfReader::getStartingLevelPath() {
 
     auto translation_dir = config_values[LEVELS_DIR];
     auto default_level_filename = config_values[STARTING_LEVEL];
     auto default_conf_type = config_values[DEFAULT_CONF_TYPE];
 
     return translation_dir +"/"+ default_level_filename + "." + default_conf_type;
+}
+
+std::string TxtConfReader::getLevelPath(std::string level) {
+
+    auto translation_dir = config_values[LEVELS_DIR];
+    auto default_conf_type = config_values[DEFAULT_CONF_TYPE];
+
+    return translation_dir +"/"+ level + "." + default_conf_type;
 }
 
 unsigned int TxtConfReader::getFramerate() {

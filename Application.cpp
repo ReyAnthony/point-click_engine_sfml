@@ -46,6 +46,8 @@ void Application::start() {
 
         try{
 
+            level_switch_observer = new LevelSwitchObserver(level_map, (GameScene*&) current_scene, event_dispatcher);
+
             xml_action_default_reader =
                     new XMLActionDefaultReader(conf, *trad);
 
@@ -57,10 +59,13 @@ void Application::start() {
                                      event_dispatcher,
                                      *action_panel,
                                      *speech_panel,
-                                    *xml_action_default_reader);
+                                    *xml_action_default_reader,
+                                     *level_switch_observer,
+                                    level_map);
 
-            auto starting_level_file = conf.getStartingLevel();
-            this->current_scene = level_loader.generateGameSceneFromLevelFile(starting_level_file);
+            auto starting_level_file = conf.getStartingLevelPath();
+            auto starting_level_name = conf.getStartingLevelFile();
+            this->current_scene = level_loader.generateGameSceneFromLevelFile(starting_level_file, starting_level_name);
             event_dispatcher.registerObserver(*current_scene);
         }
         catch(boost::exception &e){

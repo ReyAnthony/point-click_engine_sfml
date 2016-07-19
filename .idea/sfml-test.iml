@@ -17,11 +17,14 @@
       <sourceFolder url="file://$MODULE_DIR$/translations/XMLTranslationReader.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/translations/JSONTranslationReader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/translations/TranslationReader.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/events/LevelSwitchObserver.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/EventDispatcher.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/Observer.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/Observable.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/GUIActionType.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/events/LevelSwitchObserver.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/EventDispatcher.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/events/SwitchLevelAction.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/Observable.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events/Observer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Application.cpp" isTestSource="false" />
@@ -33,12 +36,12 @@
       <sourceFolder url="file://$MODULE_DIR$/game/AbstractScene.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/AbstractScene.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Object.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/game/GameScene.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/game/Object.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/action_panel/ActionPanel.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/action_panel/ActionPanel.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/action_panel/Button.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/action_panel/Button.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/game/Object.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/game/GameScene.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/speech_panel/SpeechPanel.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/speech_panel/SpeechPanel.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.hpp" isTestSource="false" />

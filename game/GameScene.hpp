@@ -11,8 +11,10 @@
 #include "AbstractScene.hpp"
 #include "action_panel/ActionPanel.hpp"
 #include "speech_panel/SpeechPanel.hpp"
+#include "../events/Observable.hpp"
+#include "../events/SwitchLevelAction.hpp"
 
-class GameScene : public AbstractScene {
+class GameScene : public AbstractScene , public Observable<SwitchLevelAction>{
 
 public:
 
@@ -22,6 +24,14 @@ public:
 
     void setName(std::string level_name);
     void setBackground(std::string background_file);
+    void setDefaultPos(int x, int y){
+        default_x = x;
+        default_y = y;
+    }
+    void resetPlayerToDefaultPosition(){
+        player.setPosX(default_x);
+        player.setPosY(default_y);
+    }
 
     void addObject(Object& object);
     Object & getLastInsertedObject();
@@ -32,11 +42,19 @@ public:
 private:
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates) const override;
+    void notifyObservers(SwitchLevelAction& type,  sf::RenderTarget&renderTarget) override{
+        for(auto& observer : observers){
+            observer->notify(type, renderTarget);
+        }
+    }
     void updateDrawingPriorities();
 
     std::string level_name;
     std::vector<Object*> objects;
     std::vector<const Object*> drawing_list;
+
+    int default_x;
+    int default_y;
 
     Object background;
     Object& player;

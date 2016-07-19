@@ -3,6 +3,7 @@
 //
 
 #include "LevelLoader.hpp"
+#include "../events/LevelSwitchObserver.hpp"
 
 LevelLoader::LevelLoader(TranslationReader& translation_reader,
                          TxtConfReader& configuration_reader,
@@ -10,7 +11,9 @@ LevelLoader::LevelLoader(TranslationReader& translation_reader,
                          EventDispatcher& event_dispatcher,
                          ActionPanel& action_panel,
                          SpeechPanel& speech_panel,
-                         XMLActionDefaultReader& xml_action_default_reader)
+                         XMLActionDefaultReader& xml_action_default_reader,
+                         LevelSwitchObserver& level_switch_observer,
+                         std::map<std::string, GameScene*>& level_map)
         :
           translation_reader(translation_reader),
           configuration_reader(configuration_reader),
@@ -18,13 +21,18 @@ LevelLoader::LevelLoader(TranslationReader& translation_reader,
           event_dispatcher(event_dispatcher),
           action_panel(action_panel),
           speech_panel(speech_panel),
-          xml_action_default_reader(xml_action_default_reader){
+          xml_action_default_reader(xml_action_default_reader),
+          level_switch_observer(level_switch_observer),
+          level_map(level_map){
 }
 
-GameScene *LevelLoader::generateGameSceneFromLevelFile(std::string levelFile) {
+GameScene *LevelLoader::generateGameSceneFromLevelFile(std::string level_path, std::string level_name) {
+
+    this->level_name = level_name;
+    std::cout << "loading a level" << std::endl;
 
     pt::ptree tree;
-    pt::read_xml(levelFile, tree);
+    pt::read_xml(level_path, tree);
 
     std::list<std::string> include_files;
 
@@ -46,9 +54,12 @@ GameScene *LevelLoader::generateGameSceneFromLevelFile(std::string levelFile) {
 GameScene *LevelLoader::generateScene(pt::ptree& tree, std::list<std::string> include_files) {
 
     providen_values = generateIncludeData(include_files);
-
     GameScene * scene = new GameScene(player, action_panel, speech_panel);
+    scene->registerObserver(level_switch_observer);
+    level_map.insert(std::pair<std::string, GameScene*>(level_name, scene));
     walk(tree, *scene);
+    //on truande, vu que c'est le dernier executé (recursif) on remet le player à la place desginée dans ce niveau ..
+    scene->resetPlayerToDefaultPosition();
     return scene;
 }
 
@@ -79,7 +90,7 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
 
     for(pt::ptree::value_type &v : tree.get_child(""))
     {
-        //FIXME check if in the right place (AKA no background outside of object for example)
+        //FIXME should add an XLST verification of the schema
         auto node_type = v.first;
 
         if(node_type !=""){
@@ -100,9 +111,7 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
 
                 auto x = getAttribute<int>("pos_x", v);
                 auto y = getAttribute<int>("pos_y", v);
-
-                player.setPosX(x);
-                player.setPosY(y);
+                scene.setDefaultPos(x, y);
             }
 
             if(node_type == "object"){
@@ -125,29 +134,64 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                 scene.addObject(*obj);
             }
 
-            if(node_type == "talk" || node_type == "see"){
+            if(node_type == "talk" || node_type == "see" || node_type == "use"){
 
                 auto parent_node_type = node_type;
-                std::vector<std::string> sentences;
 
-                for(pt::ptree::value_type &v : v.second)
-                {
-                    node_type = v.first;
-                    if(node_type == "say")
-                        sentences.push_back(getNodeValueAsTranslatedString(v));
+                if(node_type != "use"){
 
-                    std::cout << v.second.data() << std::endl;
+                    std::vector<std::string> sentences;
+                    for(pt::ptree::value_type &v : v.second)
+                    {
+                        node_type = v.first;
+                        if(node_type == "say")
+                            sentences.push_back(getNodeValueAsTranslatedString(v));
+
+                        std::cout << v.second.data() << std::endl;
+                    }
+
+                    Object& last_inserted_object = scene.getLastInsertedObject();
+
+                    if(parent_node_type == "see"){
+                        Action* see_action = new Action(sentences);
+                        last_inserted_object.addAction(SEE, see_action);
+                    }
+                    else {
+                        Action* talk_action = new Action(sentences);
+                        last_inserted_object.addAction(TALK, talk_action);
+                    }
                 }
+                else{
+                    for(pt::ptree::value_type &v : v.second)
+                    {
+                        node_type = v.first;
+                        if(node_type == "goto" && parent_node_type == "use"){
 
-                Object& last_inserted_object = scene.getLastInsertedObject();
+                            auto level_file = v.second.data();
 
-                if(parent_node_type == "see"){
-                    Action* see_action = new Action(SEE, sentences);
-                    last_inserted_object.addAction(SEE, see_action);
-                }
-                else {
-                    Action* talk_action = new Action(TALK, sentences);
-                    last_inserted_object.addAction(TALK, talk_action);
+                            //if the level is not in the map (otherwize infinite inclusions)
+                            if(level_map.find(level_file) == level_map.end()){
+
+                                LevelLoader* loader = new LevelLoader(translation_reader,
+                                                                      configuration_reader,
+                                                                      player,
+                                                                      event_dispatcher,
+                                                                      action_panel,
+                                                                      speech_panel,
+                                                                      xml_action_default_reader,
+                                                                      level_switch_observer,
+                                                                      level_map);
+
+                                generateGameSceneFromLevelFile(configuration_reader.getLevelPath(level_file), level_file);
+                                delete loader;
+                            }
+
+                            Object& last_inserted_object = scene.getLastInsertedObject();
+                            last_inserted_object.addAction(USE, new Action(level_file));
+                            //only one goto, so we break
+                            break;
+                        }
+                    }
                 }
             }
 

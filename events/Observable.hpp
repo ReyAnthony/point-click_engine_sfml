@@ -17,13 +17,8 @@ public:
         observers.push_back(&observer);
     }
 
-    //TODO redefinir ==
-    void unregistrerObserver(Observer<T>& observer){
-        //observers.remove(observer);
-    }
-
     void removeAllObservers(){
-        observers.empty();
+        observers.clear();
     }
 
 protected:

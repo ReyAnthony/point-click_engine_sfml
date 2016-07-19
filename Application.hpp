@@ -15,6 +15,7 @@
 #include "events/EventDispatcher.hpp"
 #include "game/Player.hpp"
 #include "game/action_panel/ActionPanel.hpp"
+#include "events/LevelSwitchObserver.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -53,6 +54,8 @@ private:
     ActionPanel* action_panel;
     SpeechPanel* speech_panel;
     XMLActionDefaultReader* xml_action_default_reader;
+    LevelSwitchObserver* level_switch_observer;
+    std::map<std::string, GameScene*> level_map;
 
     bool has_exception;
 };

@@ -37,7 +37,7 @@ public:
 
             std::vector<std::string> sentences;
             sentences.push_back(text);
-            auto action = new Action(TALK, sentences);
+            auto action = new Action(sentences);
             GUIActionsType actionToInsert = NOOP;
 
             if(action_type == "talk")

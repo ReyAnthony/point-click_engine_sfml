@@ -17,9 +17,15 @@ public:
         this->actionsType = actionType;
     }
 
-    Action(GUIActionsType actionType, std::vector<std::string> sentences) : sentences(sentences) {
+    Action(std::vector<std::string> sentences) : sentences(sentences) {
             this->setActionType(TALK);
     }
+
+    Action(std::string new_level)  {
+        this->setActionType(USE);
+        this->new_level = new_level;
+    }
+
 
     GUIActionsType getActionType(){
         return this->actionsType;
@@ -33,7 +39,14 @@ public:
         return sentences;
     }
 
+
+    std::string getNewLevel() const {
+        return new_level;
+    }
+
+
 private:
+    std::string new_level;
     std::vector<std::string> sentences;
     GUIActionsType actionsType = NOOP;
 

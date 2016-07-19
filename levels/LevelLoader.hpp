@@ -22,6 +22,7 @@
 #include "../events/EventDispatcher.hpp"
 #include "../game/Action.hpp"
 #include "../actions/XMLActionDefaultReader.hpp"
+#include "../events/LevelSwitchObserver.hpp"
 
 
 namespace pt = boost::property_tree;
@@ -34,9 +35,12 @@ public:
                 TxtConfReader& configuration_reader,
                 Object& player, EventDispatcher& event_dispatcher,
                 ActionPanel& action_panel,
-                SpeechPanel& speech_panel, XMLActionDefaultReader& xml_action_default_reader);
+                SpeechPanel& speech_panel,
+                XMLActionDefaultReader& xml_action_default_reader,
+                LevelSwitchObserver& level_switch_observer,
+                std::map<std::string, GameScene*>& level_map);
 
-    GameScene *generateGameSceneFromLevelFile(std::string levelFile);
+    GameScene *generateGameSceneFromLevelFile(std::string level_path, std::string level_name);
 
 private:
 
@@ -63,8 +67,10 @@ private:
     void walk(pt::ptree& tree, GameScene & scene);
 
     std::string provideAndTranslate(std::string value);
+    std::string level_name;
 
     EventDispatcher& event_dispatcher;
+    LevelSwitchObserver& level_switch_observer;
 
     ActionPanel& action_panel;
     TranslationReader& translation_reader;
@@ -75,6 +81,7 @@ private:
     std::string translation_escape_char = configuration_reader.getTranslationEscapeChar();
 
     std::map<std::string, std::string> providen_values;
+    std::map<std::string, GameScene*>& level_map;
 };
 
 #endif //SFML_TEST_LEVELLOADER_HPP
