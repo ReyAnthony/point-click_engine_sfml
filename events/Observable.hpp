@@ -13,11 +13,11 @@ template <class T>
 class Observable {
 
 public:
-    void registerObserver(Observer<T>& observer){
+    void registerObserver(Observer<T>& observer) {
         observers.push_back(&observer);
     }
 
-    void removeAllObservers(){
+    void removeAllObservers() {
         observers.clear();
     }
 

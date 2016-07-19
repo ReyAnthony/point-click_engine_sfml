@@ -154,6 +154,11 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
             }
             else if (actionType == USE){
 
+                if(action.isNeededInInventory())
+                {
+                    // ....
+                }
+
                 if(player.isColliding(**it)){
                     std::cout << "USE" << " " <<  (*it)->getName() << std::endl;
                     SwitchLevelAction switchLevelAction(action.getNewLevel());
@@ -168,16 +173,28 @@ void GameScene::notify(sf::Event &event, sf::RenderTarget &renderTarget) {
 
             }
             else if( actionType == GOTO){
-                std::cout << "GOTO" << " " <<  (*it)->getName() << std::endl;
-                //pathfind ...
+
             }
 
             if(actionType != NOOP)
                 break;
         }
-
-        //player.doAction(event, renderTarget, current_action);
-
     }
 
+}
+
+void GameScene::notifyObservers(SwitchLevelAction& type, sf::RenderTarget&renderTarget) {
+    for(auto& observer : observers){
+        observer->notify(type, renderTarget);
+    }
+}
+
+void GameScene::resetPlayerToDefaultPosition() {
+    player.setPosX(default_x);
+    player.setPosY(default_y);
+}
+
+void GameScene::setDefaultPos(int x, int y) {
+    default_x = x;
+    default_y = y;
 }

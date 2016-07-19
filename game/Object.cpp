@@ -183,7 +183,7 @@ void Object::addAction(GUIActionsType key, Action * action) {
 
 Object::~Object() {
     for(auto action : actions){
-        delete action.second;
+        //delete action.second;
     }
 }
 

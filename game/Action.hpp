@@ -6,50 +6,36 @@
 #define SFML_TEST_ABSTRACTACTION_HPP
 
 
+#include <iosfwd>
+#include <vector>
+#include <string>
 #include "../events/GUIActionType.hpp"
 
 class Action {
 
 public:
 
-    Action(GUIActionsType actionType){
-
-        this->actionsType = actionType;
-    }
-
-    Action(std::vector<std::string> sentences) : sentences(sentences) {
-            this->setActionType(TALK);
-    }
-
-    Action(std::string new_level)  {
-        this->setActionType(USE);
-        this->new_level = new_level;
-    }
-
-
-    GUIActionsType getActionType(){
-        return this->actionsType;
-    }
-
-    void setActionType(GUIActionsType actionsType){
-        this->actionsType = actionsType;
-    }
+    Action(GUIActionsType actionType);
+    Action(const Action& other );
+    Action & operator=(const Action& other);
+    Action(std::vector<std::string> sentences);
+    Action(std::string new_level, bool need_in_inventory = false);
+    GUIActionsType getActionType();
+    void setActionType(GUIActionsType actionsType);
 
     const std::vector<std::string> getSentences() const {
         return sentences;
     }
 
-
-    std::string getNewLevel() const {
-        return new_level;
-    }
+    std::string getNewLevel() const;
+    bool isNeededInInventory();
 
 
 private:
     std::string new_level;
     std::vector<std::string> sentences;
     GUIActionsType actionsType = NOOP;
-
+    bool need_in_inventory;
 };
 
 

@@ -24,15 +24,8 @@ public:
 
     void setName(std::string level_name);
     void setBackground(std::string background_file);
-    void setDefaultPos(int x, int y){
-        default_x = x;
-        default_y = y;
-    }
-    void resetPlayerToDefaultPosition(){
-        player.setPosX(default_x);
-        player.setPosY(default_y);
-    }
-
+    void setDefaultPos(int x, int y);
+    void resetPlayerToDefaultPosition();
     void addObject(Object& object);
     Object & getLastInsertedObject();
 
@@ -42,11 +35,8 @@ public:
 private:
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates) const override;
-    void notifyObservers(SwitchLevelAction& type,  sf::RenderTarget&renderTarget) override{
-        for(auto& observer : observers){
-            observer->notify(type, renderTarget);
-        }
-    }
+
+    void notifyObservers(SwitchLevelAction& type, sf::RenderTarget&renderTarget) override;
     void updateDrawingPriorities();
 
     std::string level_name;

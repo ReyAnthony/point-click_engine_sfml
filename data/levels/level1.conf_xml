@@ -4,10 +4,6 @@
 <level name="providen_level_1_name">
     <background> providen_background_level </background>
     <starting-position pos_x="400" pos_y="400"/>
-    <!--
-
-    <collider x="0" y="300" width="266" height="44"/>
-    <collider x="0" y="300" width="266" height="44"/> -->
 
     <!-- dynamic objetcs -->
     <object name="providen_suspended_pirate_name" sprite="providen_sprite_pirate3" pos_x="655" pos_y="110" frames="6" y_limit="500" ms="240">
@@ -51,8 +47,9 @@
     <object name="#--table" sprite="providen_sprite_table5" pos_x="1550" pos_y="430" y_limit="170">
         <collider height="44"/>
     </object>
-
-
+    <object name="key" sprite="key" pos_x="1550" pos_y="430">
+        <grab> </grab>
+    </object>
 </level>
 
 

@@ -11,13 +11,7 @@
 class EventDispatcher : public Observable<sf::Event> {
 
 public:
-    virtual void notifyObservers(sf::Event& event, sf::RenderTarget& renderTarget) override {
-
-        for(auto& obs : Observable<sf::Event>::observers) {
-
-            obs->notify(event, renderTarget);
-        }
-    }
+    virtual void notifyObservers(sf::Event& event, sf::RenderTarget& renderTarget);
 
 };
 

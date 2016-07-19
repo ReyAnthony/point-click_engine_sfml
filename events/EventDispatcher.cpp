@@ -3,3 +3,11 @@
 //
 
 #include "EventDispatcher.hpp"
+
+void EventDispatcher::notifyObservers(sf::Event& event, sf::RenderTarget& renderTarget) {
+
+    for(auto& obs : Observable<sf::Event>::observers) {
+
+        obs->notify(event, renderTarget);
+    }
+}

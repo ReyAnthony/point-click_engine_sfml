@@ -29,7 +29,6 @@ LevelLoader::LevelLoader(TranslationReader& translation_reader,
 GameScene *LevelLoader::generateGameSceneFromLevelFile(std::string level_path, std::string level_name) {
 
     this->level_name = level_name;
-    std::cout << "loading a level" << std::endl;
 
     pt::ptree tree;
     pt::read_xml(level_path, tree);
@@ -149,7 +148,7 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
 
                 auto parent_node_type = node_type;
 
-                if(node_type != "use"){
+                if(node_type == "see" || node_type == "talk"){
 
                     std::vector<std::string> sentences;
                     for(pt::ptree::value_type &v : v.second)
@@ -170,7 +169,11 @@ void LevelLoader::walk(pt::ptree& tree, GameScene & scene) {
                         last_inserted_object.addAction(TALK, talk_action);
                     }
                 }
-                else{
+                else if(node_type == "grab"){
+                    Object& last_inserted_object = scene.getLastInsertedObject();
+                    last_inserted_object.addAction(GRAB, new Action(GRAB));
+                }
+                else if (node_type == "use"){
                     for(pt::ptree::value_type &v : v.second)
                     {
                         node_type = v.first;

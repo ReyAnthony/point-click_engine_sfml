@@ -84,3 +84,24 @@ void Player::updateCollider() {
                         sprite.getPosition().y
                         + sprite.getTexture()->getSize().y);
 }
+
+Player::Player(std::string name,
+               int pos_x,
+               int pos_y,
+               std::string texture_file,
+               int frames,
+               int ms_beetwen_frames) : Object(name, pos_x, pos_y, texture_file, frames, ms_beetwen_frames, 0), empty_action(NOOP) {
+
+    int x = 0;
+    int y = 0;
+    int x_max = texture.getSize().x / (frames * 4); //directions
+    int y_max = texture.getSize().y;
+    this->sprite.setTextureRect(sf::IntRect(x, y, x_max, y_max));
+
+    updateCollider();
+}
+
+Player::Player(const Player& ref) : Object(ref), empty_action(ref.empty_action) {
+    positionBeforeUpdate = ref.positionBeforeUpdate;
+    current_direction = ref.current_direction;
+}

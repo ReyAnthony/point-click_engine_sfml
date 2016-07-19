@@ -12,4 +12,6 @@ std::string JSONTranslationReader::getTranslationFromKey(std::string key) {
 
     nlohmann::json j = nlohmann::json::parse(key);
     std::cout << j;
+
+    return "";
 }
