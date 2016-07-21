@@ -3,7 +3,7 @@
 
 <level name="providen_level_1_name">
 <!-- <music> providen_music_truc </music> -->
-<background> providen_background_level </background>
+<background> providen_background_level2 </background>
 <starting-position pos_x="700" pos_y="350"/>
 
 <!-- static objects -->
